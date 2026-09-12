@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Ariane's Birthday Royale</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="scanlines"></div>
+
+<!-- ===================== BOOT SCREEN ===================== -->
+<section id="screen-boot" class="screen active">
+  <div class="boot-glow"></div>
+  <div class="boot-content">
+    <p class="eyebrow">A BIRTHDAY BATTLE ROYALE PRESENTATION</p>
+    <h1 class="mega-title">
+      <span class="line1">ARIANE'S</span>
+      <span class="line2">BIRTHDAY <em>ROYALE</em></span>
+    </h1>
+    <p class="subtitle">Season 26 &middot; Reef &amp; Chemistry Chapter</p>
+    <button id="btn-drop-in" class="btn-primary">
+      <span class="btn-shine"></span>
+      DROP IN
+    </button>
+    <p class="hint">🎧 best with sound on, but works fine without</p>
+  </div>
+  <div class="battle-bus" aria-hidden="true">🎈</div>
+</section>
+
+<!-- ===================== LOCKER / CHARACTER SELECT ===================== -->
+<section id="screen-locker" class="screen">
+  <header class="topbar">
+    <span class="topbar-title">LOCKER</span>
+    <span class="topbar-sub">TAP THE CARD</span>
+  </header>
+
+  <div class="locker-wrap">
+    <div class="skin-card rarity-legendary" id="skin-card">
+      <div class="skin-card-glow"></div>
+      <div class="rarity-tag">LEGENDARY</div>
+      <div class="skin-art-frame">
+        <img id="ariane-skin-img" src="assets/ariane-skin.png" alt="Ariane skin art" onerror="this.style.display='none'; this.parentElement.classList.add('art-missing');">
+        <div class="art-placeholder">
+          <div class="placeholder-silhouette">🥼</div>
+          <div class="placeholder-crocs">🩴</div>
+          <p>SKIN ART LOADING SOON</p>
+        </div>
+      </div>
+      <div class="skin-info">
+        <h2>DR. ARIANE</h2>
+        <p class="skin-subtitle">— Reef Chemist —</p>
+        <ul class="skin-tags">
+          <li>🥼 Lab Coat Style</li>
+          <li>🩴 Turquoise Crocs</li>
+          <li>📌 Pins: Equipped</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidekick-card" id="sidekick-card">
+      <div class="sidekick-badge">SIDEKICK</div>
+      <div class="sidekick-art-frame">
+        <img id="tchoupie-img" src="assets/tchoupie.png" alt="Tchoupie the goldendoodle" onerror="this.style.display='none'; this.parentElement.classList.add('art-missing');">
+        <div class="art-placeholder small">
+          <div class="placeholder-silhouette">🐾</div>
+        </div>
+      </div>
+      <h3>TCHOUPIE</h3>
+      <p class="sidekick-role">Black Goldendoodle &middot; Loyal Companion</p>
+    </div>
+  </div>
+
+  <button id="btn-squad-up" class="btn-primary">
+    <span class="btn-shine"></span>
+    SQUAD UP
+  </button>
+</section>
+
+<!-- ===================== LOBBY / ISLAND MAP ===================== -->
+<section id="screen-lobby" class="screen">
+  <header class="topbar">
+    <span class="topbar-title">THE ISLAND</span>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+      <span id="progress-label" class="progress-label">0 / 8 COLLECTED</span>
+    </div>
+  </header>
+
+  <div id="island" class="island">
+    <!-- chests injected by JS -->
+  </div>
+
+  <div id="inventory-bar" class="inventory-bar" aria-label="Collected loot"></div>
+</section>
+
+<!-- ===================== LOOT REVEAL MODAL ===================== -->
+<div id="loot-modal" class="loot-modal">
+  <div class="loot-modal-inner">
+    <div class="loot-modal-rarity" id="loot-rarity">EPIC</div>
+    <div class="loot-modal-icon" id="loot-icon">🦘</div>
+    <h3 id="loot-name">ITEM NAME</h3>
+    <p id="loot-message">message goes here</p>
+    <button id="btn-loot-close" class="btn-secondary">NICE</button>
+  </div>
+</div>
+
+<!-- ===================== VICTORY ROYALE ===================== -->
+<section id="screen-victory" class="screen">
+  <canvas id="confetti-canvas"></canvas>
+  <div class="victory-content">
+    <p class="victory-hash">#1</p>
+    <h1 class="victory-title">VICTORY ROYALE</h1>
+    <p class="victory-squad">ARIANE'S BIRTHDAY SQUAD</p>
+
+    <div class="stat-grid">
+      <div class="stat"><span class="stat-num">26</span><span class="stat-label">Level Reached</span></div>
+      <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Vibes Secured</span></div>
+      <div class="stat"><span class="stat-num">500</span><span class="stat-label">Sangria Farmed</span></div>
+      <div class="stat"><span class="stat-num">1st</span><span class="stat-label">Place, Obviously</span></div>
+    </div>
+
+    <div class="birthday-message">
+      <p>Happy birthday, Ariane! 🎉<br>
+      Here's to another year of chaos, chemistry, and questionable Fortnite decisions.</p>
+    </div>
+
+    <button id="btn-replay" class="btn-secondary">PLAY AGAIN</button>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
