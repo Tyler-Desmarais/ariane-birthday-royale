@@ -6,14 +6,16 @@ A Fortnite-lobby-themed interactive birthday page. Boot screen → character loc
 
 Just open `index.html` in a browser, or serve the folder with any static server.
 
-## Adding the real art
+## Character art
 
-Drop these files into `assets/` (exact filenames) and they'll automatically replace the placeholders — no code changes needed:
+`assets/ariane-skin.svg` and `assets/tchoupie.svg` are hand-built vector illustrations (chemist lab coat + goggles + flask, turquoise crocs with pins, and Tchoupie the black goldendoodle sidekick). They're plain SVG, so they're easy to tweak by hand or in any vector editor.
 
-- `assets/ariane-skin.png` — the custom "skin" art of Ariane (lab coat, turquoise crocs with pins visible)
-- `assets/tchoupie.png` — photo/art of Tchoupie, the black goldendoodle sidekick
+Want to swap in different art instead? Drop a replacement file into `assets/` — any of these filenames work and will be picked up automatically, no code changes needed:
 
-Recommended size: roughly 3:4 portrait for the skin, square for Tchoupie. PNG or JPG both work.
+- `assets/ariane-skin.svg` / `.png` / `.jpg` — just update the `src` in `index.html` (`#ariane-skin-img`) if you change the extension
+- `assets/tchoupie.svg` / `.png` / `.jpg` — same, via `#tchoupie-img`
+
+Recommended size: roughly 3:4 portrait for the skin, square for Tchoupie.
 
 ## Customizing the jokes/messages
 

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <ellipse cx="150" cy="272" rx="88" ry="12" fill="#000" opacity="0.3"/>
+
+  <!-- body -->
+  <ellipse cx="150" cy="205" rx="72" ry="62" fill="#1b1a1c"/>
+
+  <!-- curl texture on body -->
+  <g fill="#28262a">
+    <circle cx="90" cy="180" r="10"/>
+    <circle cx="82" cy="205" r="9"/>
+    <circle cx="88" cy="232" r="10"/>
+    <circle cx="105" cy="252" r="9"/>
+    <circle cx="130" cy="262" r="9"/>
+    <circle cx="170" cy="262" r="9"/>
+    <circle cx="195" cy="252" r="9"/>
+    <circle cx="212" cy="232" r="10"/>
+    <circle cx="218" cy="205" r="9"/>
+    <circle cx="210" cy="180" r="10"/>
+  </g>
+
+  <!-- front paws -->
+  <rect x="118" y="248" width="30" height="32" rx="14" fill="#1b1a1c"/>
+  <rect x="152" y="248" width="30" height="32" rx="14" fill="#1b1a1c"/>
+  <circle cx="128" cy="278" r="8" fill="#28262a"/>
+  <circle cx="172" cy="278" r="8" fill="#28262a"/>
+
+  <!-- ears -->
+  <path d="M96,108 C68,132 66,178 92,202 C108,184 106,144 112,116 Z" fill="#1b1a1c"/>
+  <path d="M204,108 C232,132 234,178 208,202 C192,184 194,144 188,116 Z" fill="#1b1a1c"/>
+  <g fill="#28262a">
+    <circle cx="82" cy="140" r="8"/>
+    <circle cx="76" cy="165" r="8"/>
+    <circle cx="82" cy="190" r="7"/>
+    <circle cx="218" cy="140" r="8"/>
+    <circle cx="224" cy="165" r="8"/>
+    <circle cx="218" cy="190" r="7"/>
+  </g>
+
+  <!-- head -->
+  <circle cx="150" cy="128" r="60" fill="#1b1a1c"/>
+  <g fill="#28262a">
+    <circle cx="98" cy="108" r="9"/>
+    <circle cx="94" cy="132" r="8"/>
+    <circle cx="202" cy="108" r="9"/>
+    <circle cx="206" cy="132" r="8"/>
+    <circle cx="110" cy="80" r="8"/>
+    <circle cx="190" cy="80" r="8"/>
+  </g>
+
+  <!-- muzzle -->
+  <ellipse cx="150" cy="152" rx="30" ry="22" fill="#4a3626"/>
+  <ellipse cx="150" cy="146" rx="10" ry="7" fill="#0a0a0a"/>
+
+  <!-- mouth + tongue -->
+  <path d="M138,160 Q150,170 162,160" fill="none" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M143,163 C143,178 157,178 157,163 C157,172 143,172 143,163 Z" fill="#ff8fa3" stroke="#e8637d" stroke-width="1.5"/>
+
+  <!-- eyes -->
+  <ellipse cx="123" cy="112" rx="8.5" ry="10" fill="#1a1208"/>
+  <ellipse cx="177" cy="112" rx="8.5" ry="10" fill="#1a1208"/>
+  <circle cx="120.5" cy="108" r="2.2" fill="#fff"/>
+  <circle cx="174.5" cy="108" r="2.2" fill="#fff"/>
+
+  <!-- eyebrow tufts -->
+  <path d="M112,94 Q123,86 134,93" fill="none" stroke="#38363a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M166,93 Q177,86 188,94" fill="none" stroke="#38363a" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- collar -->
+  <path d="M96,178 Q150,198 204,178 L204,190 Q150,210 96,190 Z" fill="#2dd4bf" stroke="#159e8c" stroke-width="2"/>
+  <circle cx="150" cy="200" r="8" fill="#facc15" stroke="#fff" stroke-width="1.5"/>
+</svg>
