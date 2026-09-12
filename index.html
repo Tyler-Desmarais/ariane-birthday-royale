@@ -1,137 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Ariane's Birthday Royale</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b1026">
+<title>Ariane — Battle Royale</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
-<div class="scanlines"></div>
+<!-- ============ SVG SYMBOLS ============ -->
+<svg class="svg-defs" aria-hidden="true">
+  <symbol id="ic-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
+  <symbol id="ic-cart" viewBox="0 0 24 24"><path d="M4 5h2.2l2.3 9.2c.2.7.8 1.2 1.5 1.2h7.4c.7 0 1.3-.5 1.5-1.2L20.5 8H7.2"/><circle cx="10" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></symbol>
+  <symbol id="ic-locker" viewBox="0 0 24 24"><path d="M12 4.5a2 2 0 1 0-2 2c0 1 2 1.3 2 2.4L4 14v3h16v-3l-8-5.1"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9-5.3-2.9-5.3 2.9 1.1-5.9L3.5 9.7l5.9-.8z"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 24 24"><path d="M6 3.5v17M6 5h11l-2.2 3.4L17 12H6"/></symbol>
+  <symbol id="ic-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0zM7 5.5H4.5v2A3 3 0 0 0 7 10.4M17 5.5h2.5v2A3 3 0 0 1 17 10.4M10 14h4v3h-4zM8 20h8"/></symbol>
+  <symbol id="ic-person" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></symbol>
 
-<!-- ===================== BOOT SCREEN ===================== -->
-<section id="screen-boot" class="screen active">
-  <div class="boot-glow"></div>
-  <div class="boot-content">
-    <p class="eyebrow">A BIRTHDAY BATTLE ROYALE PRESENTATION</p>
-    <h1 class="mega-title">
-      <span class="line1">ARIANE'S</span>
-      <span class="line2">BIRTHDAY <em>ROYALE</em></span>
-    </h1>
-    <p class="subtitle">Season 26 &middot; Reef &amp; Chemistry Chapter</p>
-    <button id="btn-drop-in" class="btn-primary">
-      <span class="btn-shine"></span>
-      DROP IN
-    </button>
-    <p class="hint">🎧 best with sound on, but works fine without</p>
-  </div>
-  <div class="battle-bus" aria-hidden="true">🎈</div>
-</section>
+  <symbol id="battle-bus" viewBox="0 0 200 150">
+    <ellipse cx="100" cy="142" rx="42" ry="5" fill="#000" opacity=".18"/>
+    <path d="M62 52a38 30 0 0 1 76 0z" fill="#3fb8e8"/>
+    <path d="M62 52a38 30 0 0 1 76 0z" fill="none" stroke="#1d7fae" stroke-width="3"/>
+    <path d="M78 24q22-10 44 0" fill="none" stroke="#fff" stroke-width="3" opacity=".5"/>
+    <path d="M88 52h24v14H88z" fill="#d9e6ec" stroke="#1d7fae" stroke-width="2"/>
+    <rect x="42" y="66" width="116" height="46" rx="10" fill="#4fc3f0" stroke="#1d7fae" stroke-width="3"/>
+    <rect x="50" y="74" width="20" height="16" rx="3" fill="#cdeefb"/>
+    <rect x="76" y="74" width="20" height="16" rx="3" fill="#cdeefb"/>
+    <rect x="102" y="74" width="20" height="16" rx="3" fill="#cdeefb"/>
+    <rect x="128" y="74" width="22" height="16" rx="3" fill="#cdeefb"/>
+    <rect x="42" y="96" width="116" height="7" fill="#1d7fae" opacity=".55"/>
+    <circle cx="66" cy="114" r="9" fill="#23303a"/>
+    <circle cx="134" cy="114" r="9" fill="#23303a"/>
+    <circle cx="66" cy="114" r="3.5" fill="#7d919e"/>
+    <circle cx="134" cy="114" r="3.5" fill="#7d919e"/>
+  </symbol>
+</svg>
 
-<!-- ===================== LOCKER / CHARACTER SELECT ===================== -->
-<section id="screen-locker" class="screen">
-  <header class="topbar">
-    <span class="topbar-title">LOCKER</span>
-    <span class="topbar-sub">TAP THE CARD</span>
-  </header>
+<!-- ============ ÉCRAN 1 : SALON ============ -->
+<section id="screen-lobby" class="screen active">
 
-  <div class="locker-wrap">
-    <div class="skin-card rarity-legendary" id="skin-card">
-      <div class="skin-card-glow"></div>
-      <div class="rarity-tag">LEGENDARY</div>
-      <div class="skin-art-frame">
-        <img id="ariane-skin-img" src="assets/ariane-skin.svg" alt="Ariane skin art" onerror="this.style.display='none'; this.parentElement.classList.add('art-missing');">
-        <div class="art-placeholder">
-          <div class="placeholder-silhouette">🥼</div>
-          <div class="placeholder-crocs">🩴</div>
-          <p>SKIN ART LOADING SOON</p>
+  <div class="sky"></div>
+  <svg class="landscape" viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path d="M0 168 L58 108 L104 158 L152 118 L214 176 L286 126 L348 172 L400 146 L400 300 L0 300Z" fill="#3b3266" opacity=".75"/>
+    <path d="M0 205 Q80 172 152 204 T292 200 T400 210 L400 300 L0 300Z" fill="#23325a"/>
+    <g fill="#16233f">
+      <path d="M46 204c0-9 6-16 13-16s13 7 13 16z"/><rect x="57" y="200" width="4" height="10"/>
+      <path d="M96 208c0-8 5-14 11-14s11 6 11 14z"/><rect x="105" y="204" width="4" height="9"/>
+      <path d="M300 202c0-9 6-16 13-16s13 7 13 16z"/><rect x="311" y="198" width="4" height="10"/>
+      <path d="M346 208c0-8 5-14 11-14s11 6 11 14z"/><rect x="355" y="204" width="4" height="9"/>
+    </g>
+    <g fill="#182a45">
+      <path d="M110 212v-22l24-13 24 13v22z"/>
+      <path d="M106 190l28-15 28 15z" fill="#1e3352"/>
+      <rect x="122" y="196" width="10" height="16" fill="#0f1c30"/>
+      <rect x="138" y="196" width="10" height="10" fill="#0f1c30"/>
+    </g>
+    <path d="M0 240 Q100 214 204 238 T400 234 L400 300 L0 300Z" fill="#12203a"/>
+    <g fill="#0c1729">
+      <path d="M18 240c0-11 8-19 16-19s16 8 16 19z"/>
+      <path d="M356 242c0-11 8-19 16-19s16 8 16 19z"/>
+    </g>
+  </svg>
+  <div class="meteor" aria-hidden="true"></div>
+  <div class="lobby-vignette" aria-hidden="true"></div>
+
+  <div class="lobby-layout">
+
+    <header class="hud-top">
+      <nav class="hud-tabs">
+        <button class="tab active" aria-label="Jouer"><svg class="filled"><use href="#ic-play"/></svg><span>JOUER</span></button>
+        <button class="tab" aria-label="Boutique"><svg><use href="#ic-cart"/></svg></button>
+        <button class="tab" aria-label="Casier"><svg><use href="#ic-locker"/></svg><i class="dot"></i></button>
+        <button class="tab" aria-label="Passe de combat"><svg class="filled"><use href="#ic-star"/></svg><i class="dot"></i></button>
+        <button class="tab" aria-label="Défis"><svg><use href="#ic-flag"/></svg></button>
+        <button class="tab" aria-label="Carrière"><svg><use href="#ic-trophy"/></svg></button>
+        <button class="tab" aria-label="Compte"><svg><use href="#ic-person"/></svg><i class="dot"></i></button>
+      </nav>
+      <div class="hud-right">
+        <div class="vbucks"><span class="v">V</span>3&nbsp;400</div>
+        <div class="avatar"><span>A</span><i class="online"></i></div>
+      </div>
+    </header>
+
+    <div class="party-label">
+      <span class="mic">🎙</span>
+      <span class="party-name">ariane</span>
+      <span class="mute">🔇</span>
+    </div>
+
+    <div class="stage">
+      <div class="level-badge"><span>NIV.</span><b>1</b></div>
+
+      <div class="char-wrap">
+        <div class="nameplate">Ariane</div>
+        <div class="char">
+          <img id="skin-img" src="assets/ariane-skin.png" alt="Ariane"
+               onerror="this.onerror=null;this.src='assets/ariane-skin.svg';">
         </div>
       </div>
-      <div class="skin-info">
-        <h2>ARIANE</h2>
-        <p class="skin-subtitle">— The Chemist —</p>
-        <ul class="skin-tags">
-          <li>🥼 Lab Coat Style</li>
-          <li>🩴 Turquoise Crocs</li>
-          <li>📌 Pins: Equipped</li>
-        </ul>
-      </div>
-    </div>
 
-    <div class="sidekick-card" id="sidekick-card">
-      <div class="sidekick-badge">SIDEKICK</div>
-      <div class="sidekick-art-frame">
-        <img id="tchoupie-img" src="assets/tchoupie.svg" alt="Tchoupie the goldendoodle" onerror="this.style.display='none'; this.parentElement.classList.add('art-missing');">
-        <div class="art-placeholder small">
-          <div class="placeholder-silhouette">🐾</div>
+      <div class="pet-wrap">
+        <div class="pet">
+          <img id="pet-img" src="assets/tchoupie.png" alt="Tchoupie"
+               onerror="this.onerror=null;this.src='assets/tchoupie.svg';">
         </div>
+        <div class="pet-tag">Tchoupie</div>
       </div>
-      <h3>TCHOUPIE</h3>
-      <p class="sidekick-role">Black Goldendoodle &middot; Loyal Companion</p>
-    </div>
-  </div>
 
-  <button id="btn-squad-up" class="btn-primary">
-    <span class="btn-shine"></span>
-    SQUAD UP
-  </button>
+      <div class="platform platform-main"></div>
+      <div class="platform platform-empty p1"><span>+</span></div>
+      <div class="platform platform-empty p2"><span>+</span></div>
+      <div class="platform platform-empty p3"><span>+</span></div>
+    </div>
+
+    <div class="hud-bottom">
+      <button id="btn-pret" class="btn-pret">
+        <span class="btn-pret-inner">PRÊT</span>
+      </button>
+
+      <div class="fake-actions">
+        <button class="fake-btn">DISCUSSION</button>
+        <button class="fake-btn">ÉMOTE</button>
+        <button class="fake-btn">RETOUR</button>
+      </div>
+
+      <div class="mode-strip">
+        <div class="mode-card m1"><span>OG</span></div>
+        <div class="mode-card m2"><span>BOÎTE DE COMBAT</span></div>
+        <div class="mode-card m3"><span>ZONE WARS</span></div>
+        <div class="mode-card m4"><span>1V1</span></div>
+        <div class="mode-card m5"><span>TERRAIN DE JEU</span></div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<!-- ===================== LOBBY / ISLAND MAP ===================== -->
-<section id="screen-lobby" class="screen">
-  <header class="topbar">
-    <span class="topbar-title">THE ISLAND</span>
-    <div class="progress-wrap">
-      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
-      <span id="progress-label" class="progress-label">0 / 8 COLLECTED</span>
-    </div>
-  </header>
+<!-- ============ ÉCRAN 2 : LARGAGE ============ -->
+<section id="screen-drop" class="screen">
 
-  <div id="island" class="island">
-    <!-- chests injected by JS -->
+  <div class="drop-phase phase-match">
+    <div class="match-spinner"></div>
+    <h2>RECHERCHE DE PARTIE…</h2>
+    <p class="match-count"><b id="player-count">1</b> / 100 joueurs</p>
   </div>
 
-  <div id="inventory-bar" class="inventory-bar" aria-label="Collected loot"></div>
+  <div class="drop-phase phase-bus">
+    <div class="bus-sky"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <svg class="bus" viewBox="0 0 200 150" aria-hidden="true"><use href="#battle-bus"/></svg>
+    <h2 id="bus-text">LARGAGE DANS 3</h2>
+  </div>
+
+  <div class="drop-phase phase-dive">
+    <div class="dive-sky"></div>
+    <div class="speed-lines"></div>
+    <div class="diver">
+      <img src="assets/ariane-skin.png" alt=""
+           onerror="this.onerror=null;this.src='assets/ariane-skin.svg';">
+    </div>
+    <h2>SAUTEZ !</h2>
+  </div>
+
+  <button id="btn-skip" class="btn-skip">Appuyez pour passer ▸</button>
 </section>
 
-<!-- ===================== LOOT REVEAL MODAL ===================== -->
-<div id="loot-modal" class="loot-modal">
-  <div class="loot-modal-inner">
-    <div class="loot-modal-rarity" id="loot-rarity">EPIC</div>
-    <div class="loot-modal-icon" id="loot-icon">🦘</div>
-    <h3 id="loot-name">ITEM NAME</h3>
-    <p id="loot-message">message goes here</p>
-    <button id="btn-loot-close" class="btn-secondary">NICE</button>
-  </div>
-</div>
-
-<!-- ===================== VICTORY ROYALE ===================== -->
+<!-- ============ ÉCRAN 3 : VICTOIRE ROYALE ============ -->
 <section id="screen-victory" class="screen">
   <canvas id="confetti-canvas"></canvas>
+
+  <div class="bg-items" aria-hidden="true">
+    <span class="bg-item i1">🦘</span>
+    <span class="bg-item i2">🍦</span>
+    <span class="bg-item i3">🏄‍♀️</span>
+    <span class="bg-item i4">🧪</span>
+    <span class="bg-item i5">🍹</span>
+    <span class="bg-item i6">📱</span>
+    <span class="bg-item i7">🦥</span>
+    <span class="bg-item i8">✈️</span>
+    <span class="bg-item i9">🥼</span>
+    <span class="bg-item i10">🍸</span>
+  </div>
+
   <div class="victory-content">
-    <p class="victory-hash">#1</p>
-    <h1 class="victory-title">VICTORY ROYALE</h1>
-    <p class="victory-squad">ARIANE'S BIRTHDAY SQUAD</p>
+    <p class="victory-rank">#1</p>
+    <h1 class="victory-title">VICTOIRE ROYALE</h1>
+    <p class="victory-sub">JOYEUX ANNIVERSAIRE ARIANE !</p>
 
-    <div class="stat-grid">
-      <div class="stat"><span class="stat-num">26</span><span class="stat-label">Level Reached</span></div>
-      <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Vibes Secured</span></div>
-      <div class="stat"><span class="stat-num">500</span><span class="stat-label">Sangria Farmed</span></div>
-      <div class="stat"><span class="stat-num">1st</span><span class="stat-label">Place, Obviously</span></div>
+    <div class="victory-message" id="victory-message">
+      <p>[ Message personnalisé à venir — remplace ce texte ]</p>
+      <p>Lorem ipsum, ton petit mot d'anniversaire ira ici. 🎂</p>
     </div>
 
-    <div class="birthday-message">
-      <p>Happy birthday, Ariane! 🎉<br>
-      Here's to another year of chaos, chemistry, and questionable Fortnite decisions.</p>
-    </div>
-
-    <button id="btn-replay" class="btn-secondary">PLAY AGAIN</button>
+    <button id="btn-rejouer" class="btn-rejouer">REJOUER</button>
   </div>
 </section>
 

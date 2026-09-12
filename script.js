@@ -1,269 +1,169 @@
-// ===================== CONFIG: edit messages/positions here =====================
-const LOOT = [
-  {
-    id: "kangaroo",
-    icon: "🦘",
-    name: "Boxing Kangaroo",
-    rarity: "epic",
-    x: 22, y: 24,
-    message: "You've got kangaroo energy — zero to full send in one bounce. Nobody's ever ready for it."
-  },
-  {
-    id: "dq",
-    icon: "🍦",
-    name: "DQ Blizzard",
-    rarity: "rare",
-    x: 74, y: 18,
-    message: "Your Dairy Queen order lives rent-free in everyone's memory. Certified regular."
-  },
-  {
-    id: "surfboard",
-    icon: "🏄",
-    name: "Surfboard",
-    rarity: "epic",
-    x: 15, y: 55,
-    message: "Real waves or just riding the vibes — either way you make it look effortless."
-  },
-  {
-    id: "flask",
-    icon: "🧪",
-    name: "Chemistry Flask",
-    rarity: "legendary",
-    x: 50, y: 40,
-    message: "Certified mad scientist. You'd turn 'let's just wing it' into an actual controlled experiment."
-  },
-  {
-    id: "drink",
-    icon: "🍹",
-    name: "Sangria & Martini",
-    rarity: "rare",
-    x: 84, y: 58,
-    message: "Sangria in one hand, martini energy in the other. Main character hours, always."
-  },
-  {
-    id: "ipad",
-    icon: "📱",
-    name: "The iPad",
-    rarity: "rare",
-    x: 30, y: 78,
-    message: "iPad within arm's reach at all times. At this point it's basically a limb."
-  },
-  {
-    id: "sloth",
-    icon: "🦥",
-    name: "Paresseux",
-    rarity: "epic",
-    x: 65, y: 82,
-    message: "Professional relaxer. When it's nap o'clock, you are the CEO of doing absolutely nothing."
-  },
-  {
-    id: "airplane",
-    icon: "✈️",
-    name: "Boarding Pass",
-    rarity: "epic",
-    x: 50, y: 12,
-    message: "Bags packed, boarding pass ready — you're always one text away from a spontaneous trip."
-  },
-];
-
-const RARITY_LABEL = { rare: "RARE", epic: "EPIC", legendary: "LEGENDARY" };
-
-// ===================== SCREEN NAV =====================
 const screens = {
-  boot: document.getElementById("screen-boot"),
-  locker: document.getElementById("screen-locker"),
   lobby: document.getElementById("screen-lobby"),
+  drop: document.getElementById("screen-drop"),
   victory: document.getElementById("screen-victory"),
+};
+
+const phases = {
+  match: document.querySelector(".phase-match"),
+  bus: document.querySelector(".phase-bus"),
+  dive: document.querySelector(".phase-dive"),
+};
+
+let timers = [];
+const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+const clearTimers = () => {
+  timers.forEach(clearTimeout);
+  timers = [];
 };
 
 function showScreen(name) {
   Object.values(screens).forEach((s) => s.classList.remove("active"));
   screens[name].classList.add("active");
-  window.scrollTo(0, 0);
 }
 
-document.getElementById("btn-drop-in").addEventListener("click", () => showScreen("locker"));
-document.getElementById("btn-squad-up").addEventListener("click", () => showScreen("lobby"));
-document.getElementById("btn-replay").addEventListener("click", () => {
-  collected.clear();
-  buildIsland();
-  updateProgress();
-  document.getElementById("inventory-bar").innerHTML = "";
+function showPhase(name) {
+  Object.values(phases).forEach((p) => p.classList.remove("active"));
+  phases[name].classList.add("active");
+}
+
+function restartAnimation(el) {
+  el.style.animation = "none";
+  void el.offsetWidth;
+  el.style.animation = "";
+}
+
+// ===================== SÉQUENCE DE LARGAGE =====================
+document.getElementById("btn-pret").addEventListener("click", () => {
+  blip();
+  startDrop();
+});
+
+function startDrop() {
+  clearTimers();
+  showScreen("drop");
+  showPhase("match");
+  countPlayers();
+
+  later(() => {
+    showPhase("bus");
+    restartAnimation(document.querySelector(".bus"));
+    const busText = document.getElementById("bus-text");
+    busText.textContent = "LARGAGE DANS 3";
+    later(() => (busText.textContent = "LARGAGE DANS 2"), 1000);
+    later(() => (busText.textContent = "LARGAGE DANS 1"), 2000);
+    later(() => (busText.textContent = "SAUTEZ !"), 3000);
+  }, 1800);
+
+  later(() => showPhase("dive"), 6000);
+  later(finishDrop, 8200);
+}
+
+function countPlayers() {
+  const el = document.getElementById("player-count");
+  let n = 1;
+  const step = () => {
+    n += Math.floor(Math.random() * 9) + 3;
+    if (n >= 100) {
+      el.textContent = "100";
+      return;
+    }
+    el.textContent = n;
+    later(step, 90);
+  };
+  step();
+}
+
+function finishDrop() {
+  clearTimers();
+  showScreen("victory");
+  startConfetti();
+}
+
+document.getElementById("btn-skip").addEventListener("click", finishDrop);
+
+document.getElementById("btn-rejouer").addEventListener("click", () => {
+  clearTimers();
   showScreen("lobby");
 });
 
-// ===================== ISLAND / CHESTS =====================
-const island = document.getElementById("island");
-const collected = new Set();
-
-function buildIsland() {
-  island.innerHTML = "";
-  LOOT.forEach((item) => {
-    const btn = document.createElement("button");
-    btn.className = "chest";
-    btn.style.left = item.x + "%";
-    btn.style.top = item.y + "%";
-    btn.dataset.id = item.id;
-    btn.innerHTML = `
-      <span class="chest-icon">🎁</span>
-      <span class="chest-label">${item.name}</span>
-    `;
-    btn.addEventListener("click", () => openChest(item, btn));
-    island.appendChild(btn);
-  });
-}
-
-function openChest(item, btn) {
-  if (collected.has(item.id)) return;
-  collected.add(item.id);
-  btn.classList.add("collected", "pop");
-  btn.querySelector(".chest-icon").textContent = item.icon;
-
-  showLootModal(item);
-  addToInventory(item);
-  updateProgress();
-
-  if (collected.size === LOOT.length) {
-    setTimeout(() => showScreen("victory") || startConfetti(), 900);
+// ===================== SON =====================
+let audioCtx;
+function blip() {
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(660, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1180, audioCtx.currentTime + 0.12);
+    gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.24);
+  } catch (e) {
+    /* pas de son, pas grave */
   }
 }
 
-function updateProgress() {
-  const pct = Math.round((collected.size / LOOT.length) * 100);
-  document.getElementById("progress-fill").style.width = pct + "%";
-  document.getElementById("progress-label").textContent = `${collected.size} / ${LOOT.length} COLLECTED`;
-}
+// ===================== CONFETTIS =====================
+const canvas = document.getElementById("confetti-canvas");
+const ctx = canvas.getContext("2d");
+let pieces = [];
+let running = false;
 
-function addToInventory(item) {
-  const bar = document.getElementById("inventory-bar");
-  const el = document.createElement("div");
-  el.className = "inv-item";
-  el.title = item.name;
-  el.textContent = item.icon;
-  bar.appendChild(el);
-}
-
-// ===================== LOOT MODAL =====================
-const lootModal = document.getElementById("loot-modal");
-function showLootModal(item) {
-  document.getElementById("loot-icon").textContent = item.icon;
-  document.getElementById("loot-name").textContent = item.name;
-  document.getElementById("loot-message").textContent = item.message;
-  const rarityEl = document.getElementById("loot-rarity");
-  rarityEl.textContent = RARITY_LABEL[item.rarity];
-  rarityEl.style.color =
-    item.rarity === "legendary" ? "#f7a531" : item.rarity === "epic" ? "#a479e2" : "#4a86e8";
-  rarityEl.style.borderColor = rarityEl.style.color;
-  rarityEl.style.border = "1px solid " + rarityEl.style.color;
-  rarityEl.style.background = "transparent";
-  lootModal.classList.add("show");
-}
-document.getElementById("btn-loot-close").addEventListener("click", () => {
-  lootModal.classList.remove("show");
-});
-lootModal.addEventListener("click", (e) => {
-  if (e.target === lootModal) lootModal.classList.remove("show");
-});
-
-// ===================== BACKGROUND PARTICLES =====================
-const bgCanvas = document.getElementById("bg-canvas");
-const bgCtx = bgCanvas.getContext("2d");
-let particles = [];
-
-function resizeCanvas(canvas) {
+function sizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-resizeCanvas(bgCanvas);
-
-function initParticles() {
-  particles = Array.from({ length: 46 }, () => ({
-    x: Math.random() * bgCanvas.width,
-    y: Math.random() * bgCanvas.height,
-    r: Math.random() * 2 + 0.6,
-    speed: Math.random() * 0.35 + 0.08,
-    drift: (Math.random() - 0.5) * 0.3,
-    hue: Math.random() > 0.5 ? "45,212,191" : "74,222,128",
-    alpha: Math.random() * 0.5 + 0.2,
-  }));
-}
-initParticles();
-
-function animateBg() {
-  bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-  particles.forEach((p) => {
-    p.y -= p.speed;
-    p.x += p.drift;
-    if (p.y < -5) {
-      p.y = bgCanvas.height + 5;
-      p.x = Math.random() * bgCanvas.width;
-    }
-    bgCtx.beginPath();
-    bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    bgCtx.fillStyle = `rgba(${p.hue},${p.alpha})`;
-    bgCtx.fill();
-  });
-  requestAnimationFrame(animateBg);
-}
-animateBg();
-
-window.addEventListener("resize", () => {
-  resizeCanvas(bgCanvas);
-  initParticles();
-  if (confettiCanvas) resizeCanvas(confettiCanvas);
-});
-
-// ===================== CONFETTI (Victory screen) =====================
-const confettiCanvas = document.getElementById("confetti-canvas");
-const confettiCtx = confettiCanvas.getContext("2d");
-let confettiPieces = [];
-let confettiRunning = false;
+sizeCanvas();
+window.addEventListener("resize", sizeCanvas);
 
 function startConfetti() {
-  resizeCanvas(confettiCanvas);
-  const colors = ["#2dd4bf", "#4ade80", "#facc15", "#5eead4", "#ffffff"];
-  confettiPieces = Array.from({ length: 140 }, () => ({
-    x: Math.random() * confettiCanvas.width,
-    y: -20 - Math.random() * confettiCanvas.height * 0.5,
+  sizeCanvas();
+  const colors = ["#2dd4bf", "#4ade80", "#ffd23f", "#5eead4", "#ffffff", "#ff8fa3"];
+  pieces = Array.from({ length: 150 }, () => ({
+    x: Math.random() * canvas.width,
+    y: -20 - Math.random() * canvas.height * 0.6,
     w: Math.random() * 8 + 4,
     h: Math.random() * 12 + 6,
-    speed: Math.random() * 2 + 1.5,
+    speed: Math.random() * 2.2 + 1.4,
     rot: Math.random() * 360,
-    rotSpeed: (Math.random() - 0.5) * 8,
-    drift: (Math.random() - 0.5) * 1.4,
+    rotSpeed: (Math.random() - 0.5) * 9,
+    drift: (Math.random() - 0.5) * 1.5,
     color: colors[Math.floor(Math.random() * colors.length)],
   }));
-  if (!confettiRunning) {
-    confettiRunning = true;
-    runConfetti();
+  if (!running) {
+    running = true;
+    loopConfetti();
   }
 }
 
-function runConfetti() {
-  confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-  let stillActive = false;
-  confettiPieces.forEach((c) => {
+function loopConfetti() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  let active = false;
+  pieces.forEach((c) => {
     c.y += c.speed;
     c.x += c.drift;
     c.rot += c.rotSpeed;
-    if (c.y < confettiCanvas.height + 20) stillActive = true;
-    confettiCtx.save();
-    confettiCtx.translate(c.x, c.y);
-    confettiCtx.rotate((c.rot * Math.PI) / 180);
-    confettiCtx.fillStyle = c.color;
-    confettiCtx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
-    confettiCtx.restore();
+    if (c.y < canvas.height + 20) active = true;
+    ctx.save();
+    ctx.translate(c.x, c.y);
+    ctx.rotate((c.rot * Math.PI) / 180);
+    ctx.fillStyle = c.color;
+    ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+    ctx.restore();
   });
-  if (screens.victory.classList.contains("active") && stillActive) {
-    requestAnimationFrame(runConfetti);
-  } else if (screens.victory.classList.contains("active")) {
-    // relaunch a lighter burst so it keeps feeling alive
-    setTimeout(startConfetti, 600);
+
+  if (!screens.victory.classList.contains("active")) {
+    running = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    return;
+  }
+  if (active) {
+    requestAnimationFrame(loopConfetti);
   } else {
-    confettiRunning = false;
+    setTimeout(startConfetti, 700);
   }
 }
-
-// ===================== INIT =====================
-buildIsland();
-updateProgress();

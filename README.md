@@ -1,31 +1,46 @@
 # Ariane's Birthday Royale 🎂🎮
 
-A Fortnite-lobby-themed interactive birthday page. Boot screen → character locker → island loot hunt → Victory Royale finale.
+A fake Fortnite lobby (in French) built as a birthday surprise for Ariane.
+
+**Flow:** Fortnite lobby with Ariane's character + Tchoupie the sidekick → tap **PRÊT** → matchmaking → battle bus → skydive → **VICTOIRE ROYALE** birthday screen.
+
+Built phone-first (portrait), works on desktop too.
 
 ## Run it locally
 
-Just open `index.html` in a browser, or serve the folder with any static server.
+Open `index.html` in a browser, or serve the folder with any static server.
 
-## Character art
+## 🔴 TODO — swap in the real skin art
 
-`assets/ariane-skin.svg` and `assets/tchoupie.svg` are hand-built vector illustrations (chemist lab coat + goggles + flask, turquoise crocs with pins, and Tchoupie the black goldendoodle sidekick). They're plain SVG, so they're easy to tweak by hand or in any vector editor.
+The lobby character currently uses a hand-drawn placeholder. To replace it with a real Fortnite-style skin:
 
-Want to swap in different art instead? Drop a replacement file into `assets/` — any of these filenames work and will be picked up automatically, no code changes needed:
+1. Generate the image (e.g. ChatGPT: feed it a photo of Ariane + *"make this person a Fortnite character skin wearing a chemist lab coat and turquoise Crocs, full body, transparent background"*).
+2. Save it as **`assets/ariane-skin.png`** — that exact path and filename.
+3. Done. No code changes needed; the page loads the PNG and only falls back to the placeholder SVG if it's missing.
 
-- `assets/ariane-skin.svg` / `.png` / `.jpg` — just update the `src` in `index.html` (`#ariane-skin-img`) if you change the extension
-- `assets/tchoupie.svg` / `.png` / `.jpg` — same, via `#tchoupie-img`
+Same deal for the dog: save a cut-out as **`assets/tchoupie.png`**.
 
-Recommended size: roughly 3:4 portrait for the skin, square for Tchoupie.
+**Important:** use a **transparent background PNG**, cropped tight to the character (no big empty margins), otherwise it'll render as a floating rectangle with a gap under the name plate.
 
-## Customizing the jokes/messages
+## ✏️ TODO — the birthday message
 
-Open `script.js` and edit the `LOOT` array at the top — each item has a `name`, `icon` (emoji), `rarity` (`rare`/`epic`/`legendary`), and `message` (the birthday joke/inside-reference shown when it's collected). Positions (`x`/`y`, in %) control where the chest sits on the island.
+The placeholder text lives in `index.html`, in `<div class="victory-message">`. Replace the two `<p>` lines with the real message.
 
-The final birthday message on the Victory Royale screen is in `index.html` inside `.birthday-message`.
+Other easy edits in `index.html`:
+
+| What | Where |
+|---|---|
+| Level number (`NIV. 1`) | `.level-badge` |
+| V-Bucks count | `.vbucks` |
+| Account name shown above the character | `.party-name` and `.nameplate` |
+| Pet name tag | `.pet-tag` |
+| Background items on the victory screen | `.bg-items` (emoji: 🦘 🍦 🏄‍♀️ 🧪 🍹 📱 🦥 ✈️ 🥼 🍸) |
+
+Timings for the drop sequence (matchmaking → bus → skydive) are at the top of `startDrop()` in `script.js`.
 
 ## Deploying
 
-Easiest free option: GitHub Pages.
-1. Push this repo to GitHub.
-2. In the repo settings → Pages, set source to the `main` branch, root folder.
-3. Share the generated `https://<username>.github.io/<repo>/` link.
+GitHub Pages:
+1. Push to GitHub.
+2. Settings → Pages → Source: `main` branch, `/ (root)`.
+3. Share the `https://<username>.github.io/<repo>/` link.
