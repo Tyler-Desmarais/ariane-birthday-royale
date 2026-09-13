@@ -10,17 +10,14 @@ Built phone-first (portrait), works on desktop too.
 
 Open `index.html` in a browser, or serve the folder with any static server.
 
-## 🔴 TODO — swap in the real skin art
+## Character art
 
-The lobby character currently uses a hand-drawn placeholder. To replace it with a real Fortnite-style skin:
+`assets/ariane-skin.png` is the "The Chemist" outfit render (Ariane + Tchoupie), background-removed and cropped tight. Ariane and the dog are a single image because they overlap in the source art and can't be split cleanly — so the two name tags are positioned as percentages over that image in `style.css`:
 
-1. Generate the image (e.g. ChatGPT: feed it a photo of Ariane + *"make this person a Fortnite character skin wearing a chemist lab coat and turquoise Crocs, full body, transparent background"*).
-2. Save it as **`assets/ariane-skin.png`** — that exact path and filename.
-3. Done. No code changes needed; the page loads the PNG and only falls back to the placeholder SVG if it's missing.
+- `.tag-ariane` — `left: 58%` (over her head)
+- `.tag-pet` — `left: 24%` (under the dog)
 
-Same deal for the dog: save a cut-out as **`assets/tchoupie.png`**.
-
-**Important:** use a **transparent background PNG**, cropped tight to the character (no big empty margins), otherwise it'll render as a floating rectangle with a gap under the name plate.
+If you ever swap the PNG for a differently-composed one, those two percentages are what you'd re-tune.
 
 ## ✏️ TODO — the birthday message
 
@@ -32,8 +29,8 @@ Other easy edits in `index.html`:
 |---|---|
 | Level number (`NIV. 1`) | `.level-badge` |
 | V-Bucks count | `.vbucks` |
-| Account name shown above the character | `.party-name` and `.nameplate` |
-| Pet name tag | `.pet-tag` |
+| Name above the character | `.tag-ariane` |
+| Pet name tag | `.tag-pet` |
 | Background items on the victory screen | `.bg-items` (emoji: 🦘 🍦 🏄‍♀️ 🧪 🍹 📱 🦥 ✈️ 🥼 🍸) |
 
 Timings for the drop sequence (matchmaking → bus → skydive) are at the top of `startDrop()` in `script.js`.
