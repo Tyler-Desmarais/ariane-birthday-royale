@@ -2,9 +2,11 @@
 
 A fake Fortnite lobby (in French) built as a birthday surprise for Ariane.
 
-**Flow:** Fortnite lobby with Ariane's character + Tchoupie the sidekick → tap **PRÊT** → matchmaking → battle bus → skydive → **VICTOIRE ROYALE** birthday screen.
+**Flow:** Fortnite lobby with Ariane's character + Tchoupie the sidekick → tap **JOUER** → the lobby fades out → **VICTOIRE ROYALE** birthday screen.
 
-Built phone-first (portrait), works on desktop too.
+**Landscape only**, matching the real Fortnite mobile client. Opening it on a phone held upright shows a "tourne ton téléphone" gate until it's rotated (`@media (orientation:portrait)` in `style.css`).
+
+The matchmaking → battle bus → skydive sequence is still in the code but skipped by default. Flip `SHOW_DROP_SEQUENCE` at the top of `script.js` to `true` to put it back between the lobby and the victory screen.
 
 ## Run it locally
 
@@ -21,29 +23,35 @@ If you ever swap the PNG for a differently-composed one, those two percentages a
 
 ## Background
 
-`assets/lobby-bg.jpg` is a crop of a real Fortnite lobby screenshot, taken from a region with no characters or UI in it (trees, hills, meteor, floor) so it works purely as a backdrop. It's rendered through `.scene-bg` with `object-fit: cover` + `filter: blur(8px)` and a radial vignette on top, which is what gives the page its depth-of-field look. The victory screen reuses the same image via `.scene-bg.dim`.
+`assets/lobby-bg.jpg` is built from a real Fortnite lobby screenshot. That screenshot had a character, a dog and UI panels in it, so the plate is cropped below the nav bar and between the side panels, then the character is painted over with mirrored scenery and the sky repatched (otherwise the mirror duplicates the meteor). It's drawn by `#app-bg` with `background-size: cover` + `filter: blur(8px)`, with `#app-vignette` over it — that blur is what gives the page its depth-of-field look.
 
-The uncropped original screenshot is kept outside the repo at `../lobby-bg-original-screenshot.png`.
+The uncropped original is kept outside the repo at `../lobby-bg-original-screenshot.png`.
+
+`assets/victory-banner.png` is the "#1 Victoire Royale" art with its white background flood-filled to transparent from the corners.
+
+`reference/` holds the source art this was built against — the `Lobby with skin.png` mockup that defines the target layout, and the original victory banner. Nothing in there is loaded by the page.
 
 ## Fonts
 
-The UI asks for **Burbank Big Condensed Black** (Fortnite's actual typeface) first and falls back to **Anton** / **Teko** from Google Fonts — Burbank is a commercial Adobe font, so it only kicks in if it's installed locally. The two stacks are `--fn-display` (big text) and `--fn-ui` (small chrome) in `style.css`. The birthday message deliberately stays in Rajdhani, since a condensed display face is hard to read for a paragraph.
+The UI asks for **Burbank Big Condensed Black** (Fortnite's actual typeface) first and falls back to **Anton** / **Teko** from Google Fonts — Burbank is a commercial Adobe font, so it only kicks in if it's installed locally. The two stacks are `--fn` (big text) and `--fn-ui` (small chrome) in `style.css`. The birthday message deliberately stays in Rajdhani, since a condensed display face is hard to read for a paragraph.
 
 ## ✏️ TODO — the birthday message
 
-The placeholder text lives in `index.html`, in `<div class="victory-message">`. Replace the two `<p>` lines with the real message.
+The placeholder text lives in `index.html`, in `<div class="vic-message">`. Replace the two `<p>` lines with the real message.
 
 Other easy edits in `index.html`:
 
 | What | Where |
 |---|---|
-| Level number (`NIV. 1`) | `.level-badge` |
+| Level (`Niv. 128`) and the "Prêt" status | `.nametag` |
 | V-Bucks count | `.vbucks` |
-| Name above the character | `.tag-ariane` |
-| Pet name tag | `.tag-pet` |
-| Background items on the victory screen | `.bg-items` (emoji: 🦘 🍦 🏄‍♀️ 🧪 🍹 📱 🦥 ✈️ 🥼 🍸) |
+| Nav tabs | `.nav-tabs` |
+| Event card text | `.event-card` |
+| Outfit card | `.outfit-card` |
+| Party message at the bottom | `.party-msg` |
+| Floating emoji on the victory screen | `.vic-emojis` (🦘 🍦 🏄‍♀️ 🧪 🍹 📱 🦥 ✈️ 🥼 🍸) |
 
-Timings for the drop sequence (matchmaking → bus → skydive) are at the top of `startDrop()` in `script.js`.
+Timings for the optional drop sequence are at the top of `startDrop()` in `script.js`.
 
 ## Deploying
 

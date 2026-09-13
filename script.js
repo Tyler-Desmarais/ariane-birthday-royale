@@ -1,8 +1,10 @@
-const screens = {
-  lobby: document.getElementById("screen-lobby"),
-  drop: document.getElementById("screen-drop"),
-  victory: document.getElementById("screen-victory"),
-};
+// Passe à true pour rejouer la séquence de largage (matchmaking → bus de
+// combat → saut) entre le salon et l'écran de victoire.
+const SHOW_DROP_SEQUENCE = false;
+
+const lobby = document.getElementById("lobby-ui");
+const dropScreen = document.getElementById("drop-screen");
+const victory = document.getElementById("victory-screen");
 
 const phases = {
   match: document.querySelector(".phase-match"),
@@ -17,11 +19,31 @@ const clearTimers = () => {
   timers = [];
 };
 
-function showScreen(name) {
-  Object.values(screens).forEach((s) => s.classList.remove("active"));
-  screens[name].classList.add("active");
+// ===================== JOUER =====================
+document.getElementById("play-btn").addEventListener("click", () => {
+  blip();
+  lobby.classList.add("hidden");
+  later(SHOW_DROP_SEQUENCE ? startDrop : showVictory, 1000);
+});
+
+function showVictory() {
+  clearTimers();
+  dropScreen.classList.remove("show");
+  victory.classList.add("show");
+  requestAnimationFrame(() => victory.classList.add("visible"));
+  startConfetti();
 }
 
+document.getElementById("btn-rejouer").addEventListener("click", () => {
+  clearTimers();
+  victory.classList.remove("visible");
+  later(() => {
+    victory.classList.remove("show");
+    lobby.classList.remove("hidden");
+  }, 1000);
+});
+
+// ===================== LARGAGE =====================
 function showPhase(name) {
   Object.values(phases).forEach((p) => p.classList.remove("active"));
   phases[name].classList.add("active");
@@ -33,15 +55,9 @@ function restartAnimation(el) {
   el.style.animation = "";
 }
 
-// ===================== SÉQUENCE DE LARGAGE =====================
-document.getElementById("btn-pret").addEventListener("click", () => {
-  blip();
-  startDrop();
-});
-
 function startDrop() {
   clearTimers();
-  showScreen("drop");
+  dropScreen.classList.add("show");
   showPhase("match");
   countPlayers();
 
@@ -56,7 +72,7 @@ function startDrop() {
   }, 1800);
 
   later(() => showPhase("dive"), 6000);
-  later(finishDrop, 8200);
+  later(showVictory, 8200);
 }
 
 function countPlayers() {
@@ -74,18 +90,7 @@ function countPlayers() {
   step();
 }
 
-function finishDrop() {
-  clearTimers();
-  showScreen("victory");
-  startConfetti();
-}
-
-document.getElementById("btn-skip").addEventListener("click", finishDrop);
-
-document.getElementById("btn-rejouer").addEventListener("click", () => {
-  clearTimers();
-  showScreen("lobby");
-});
+document.getElementById("btn-skip").addEventListener("click", showVictory);
 
 // ===================== SON =====================
 let audioCtx;
@@ -122,8 +127,8 @@ window.addEventListener("resize", sizeCanvas);
 
 function startConfetti() {
   sizeCanvas();
-  const colors = ["#2dd4bf", "#4ade80", "#ffd23f", "#5eead4", "#ffffff", "#ff8fa3"];
-  pieces = Array.from({ length: 150 }, () => ({
+  const colors = ["#42e8ff", "#9df4ff", "#ffe32e", "#5eead4", "#ffffff", "#ff8fa3"];
+  pieces = Array.from({ length: 160 }, () => ({
     x: Math.random() * canvas.width,
     y: -20 - Math.random() * canvas.height * 0.6,
     w: Math.random() * 8 + 4,
@@ -156,7 +161,7 @@ function loopConfetti() {
     ctx.restore();
   });
 
-  if (!screens.victory.classList.contains("active")) {
+  if (!victory.classList.contains("show")) {
     running = false;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     return;

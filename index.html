@@ -13,171 +13,168 @@
 </head>
 <body>
 
-<!-- ============ SYMBOLES SVG ============ -->
-<svg class="svg-defs" aria-hidden="true">
-  <symbol id="ic-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
-  <symbol id="ic-cart" viewBox="0 0 24 24"><path d="M3.5 4.5h2.2l2.3 9.2c.2.7.8 1.2 1.5 1.2h7.4c.7 0 1.3-.5 1.5-1.2L20.3 7.5H6.8"/><circle cx="10" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></symbol>
-  <symbol id="ic-locker" viewBox="0 0 24 24"><path d="M12 4.5a2 2 0 1 0-2 2c0 1 2 1.3 2 2.4L4 14v3h16v-3l-8-5.1"/></symbol>
-  <symbol id="ic-star" viewBox="0 0 24 24"><path d="M12 3.4l2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.8l6-.9z"/></symbol>
-  <symbol id="ic-flag" viewBox="0 0 24 24"><path d="M6 3.5v17M6 5h11l-2.2 3.4L17 12H6"/></symbol>
-  <symbol id="ic-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0zM7 5.5H4.5v2A3 3 0 0 0 7 10.4M17 5.5h2.5v2A3 3 0 0 1 17 10.4M10 14h4v3h-4zM8 20h8"/></symbol>
-  <symbol id="ic-person" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.6"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></symbol>
-  <symbol id="ic-paw" viewBox="0 0 24 24"><ellipse cx="12" cy="15" rx="5" ry="4.2"/><ellipse cx="6.6" cy="9.4" rx="2.1" ry="2.8"/><ellipse cx="10.2" cy="7" rx="2" ry="2.7"/><ellipse cx="13.8" cy="7" rx="2" ry="2.7"/><ellipse cx="17.4" cy="9.4" rx="2.1" ry="2.8"/></symbol>
+<!-- ======================= FOND 3D ======================= -->
+<div id="app-bg" aria-hidden="true"></div>
+<div id="app-vignette" aria-hidden="true"></div>
 
-  <symbol id="battle-bus" viewBox="0 0 200 150">
-    <ellipse cx="100" cy="143" rx="40" ry="5" fill="#000" opacity=".16"/>
-    <path d="M62 52a38 30 0 0 1 76 0z" fill="#42bdec"/>
-    <path d="M62 52a38 30 0 0 1 76 0z" fill="none" stroke="#1b76a6" stroke-width="3"/>
-    <path d="M78 25q22-10 44 0" fill="none" stroke="#fff" stroke-width="3" opacity=".45"/>
-    <path d="M88 52h24v14H88z" fill="#d6e6ee" stroke="#1b76a6" stroke-width="2"/>
-    <rect x="42" y="66" width="116" height="46" rx="10" fill="#51c6f2" stroke="#1b76a6" stroke-width="3"/>
-    <rect x="50" y="74" width="20" height="16" rx="3" fill="#ccecfb"/>
-    <rect x="76" y="74" width="20" height="16" rx="3" fill="#ccecfb"/>
-    <rect x="102" y="74" width="20" height="16" rx="3" fill="#ccecfb"/>
-    <rect x="128" y="74" width="22" height="16" rx="3" fill="#ccecfb"/>
-    <rect x="42" y="96" width="116" height="7" fill="#1b76a6" opacity=".5"/>
-    <circle cx="66" cy="114" r="9" fill="#222c34"/>
-    <circle cx="134" cy="114" r="9" fill="#222c34"/>
-    <circle cx="66" cy="114" r="3.5" fill="#788c99"/>
-    <circle cx="134" cy="114" r="3.5" fill="#788c99"/>
-  </symbol>
-</svg>
+<!-- ======================= SALON ======================= -->
+<div id="lobby-ui">
 
-<!-- ============ ÉCRAN 1 : SALON ============ -->
-<section id="screen-lobby" class="screen active">
+  <!-- barre de navigation -->
+  <header class="navbar">
+    <div class="brand">FORTNITE</div>
+    <nav class="nav-tabs">
+      <button class="nav-tab active">JOUER</button>
+      <button class="nav-tab">CASIER<i class="badge">!</i></button>
+      <button class="nav-tab">BOUTIQUE</button>
+      <button class="nav-tab">PASSE DE COMBAT</button>
+      <button class="nav-tab">QUÊTES<i class="badge">!</i></button>
+      <button class="nav-tab">COMPÉTITION</button>
+      <button class="nav-tab">CARRIÈRE</button>
+    </nav>
+    <div class="nav-right">
+      <div class="vbucks"><span class="v">V</span>1&nbsp;850</div>
+      <div class="avatar"><span>A</span><i class="online"></i></div>
+      <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
 
-  <div class="scene-bg" aria-hidden="true">
-    <img src="assets/lobby-bg.jpg" alt="">
-  </div>
-  <div class="scene-vignette" aria-hidden="true"></div>
+  <!-- corps : 3 colonnes -->
+  <main class="lobby-body">
 
-  <div class="lobby-layout">
-
-    <header class="hud-top">
-      <nav class="hud-tabs">
-        <button class="tab active" aria-label="Jouer"><svg class="filled"><use href="#ic-play"/></svg><span>JOUER</span></button>
-        <button class="tab" aria-label="Boutique"><svg><use href="#ic-cart"/></svg></button>
-        <button class="tab" aria-label="Casier"><svg><use href="#ic-locker"/></svg><i class="dot"></i></button>
-        <button class="tab" aria-label="Passe de combat"><svg class="filled"><use href="#ic-star"/></svg><i class="dot"></i></button>
-        <button class="tab" aria-label="Défis"><svg><use href="#ic-flag"/></svg></button>
-        <button class="tab" aria-label="Carrière"><svg><use href="#ic-trophy"/></svg></button>
-        <button class="tab" aria-label="Compte"><svg><use href="#ic-person"/></svg><i class="dot"></i></button>
-      </nav>
-      <div class="hud-right">
-        <div class="vbucks"><span class="v">V</span>3&nbsp;400</div>
-        <div class="avatar"><span>A</span><i class="online"></i></div>
-      </div>
-    </header>
-
-    <div class="stage">
-      <div class="level-badge"><span>NIV.</span><b>1</b></div>
-
-      <!-- socle lumineux 3D -->
-      <div class="pedestal-wrap">
-        <div class="pedestal"></div>
-        <div class="pedestal-core"></div>
+    <!-- colonne gauche -->
+    <div class="col col-left">
+      <div class="event-card">
+        <span class="chip">L2</span>
+        <div class="event-art"></div>
+        <div class="event-text">
+          <strong>LE BIG BANG</strong>
+          <span>ÉVÉNEMENT EN DIRECT</span>
+        </div>
+        <div class="event-dots"><i class="on"></i><i></i><i></i><i></i></div>
       </div>
 
-      <!-- emplacements d'équipe vides -->
-      <div class="slot s1"><div class="slot-disc"></div><span>+</span></div>
-      <div class="slot s2"><div class="slot-disc"></div><span>+</span></div>
-      <div class="slot s3"><div class="slot-disc"></div><span>+</span></div>
+      <div class="play-panel">
+        <h2 class="mode-title">BATTLE ROYALE</h2>
+        <div class="mode-select">
+          <svg viewBox="0 0 24 24" class="pad"><rect x="2.5" y="7.5" width="19" height="9.5" rx="4.5"/><circle cx="8" cy="12.2" r="1.1"/><circle cx="16" cy="12.2" r="1.1"/></svg>
+          <span>CLASSÉ : OFF<br>SOLO</span>
+        </div>
+        <button id="play-btn" class="play-btn">
+          <span class="play-glyph">▲</span>
+          <span class="play-label">JOUER</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- colonne centrale : personnages -->
+    <div class="col col-center">
+      <div class="nametag">
+        <div class="nametag-icon">🧪</div>
+        <div class="nametag-text">
+          <span class="nt-name">Ariane</span>
+          <span class="nt-ready">Prêt</span>
+        </div>
+        <span class="nt-level">Niv. 128</span>
+      </div>
 
       <div class="squad">
         <img id="skin-img" src="assets/ariane-skin.png" alt="Ariane, la chimiste, et Tchoupie">
-        <div class="tag tag-ariane">Ariane</div>
-        <div class="tag tag-pet"><svg class="filled paw"><use href="#ic-paw"/></svg>Tchoupie</div>
+      </div>
+
+      <!-- socles lumineux -->
+      <div class="pad-wrap pad-main"><div class="pad-disc"></div><div class="pad-ring"></div></div>
+      <div class="pad-wrap pad-empty pe1"><div class="pad-disc"></div><span class="pad-plus">+</span></div>
+      <div class="pad-wrap pad-empty pe2"><div class="pad-disc"></div><span class="pad-plus">+</span></div>
+      <div class="pad-wrap pad-empty pe3"><div class="pad-disc"></div></div>
+    </div>
+
+    <!-- colonne droite -->
+    <div class="col col-right">
+      <div class="outfit-card">
+        <div class="outfit-thumb"><img src="assets/ariane-skin.png" alt=""></div>
+        <div class="outfit-meta">
+          <strong>THE CHEMIST</strong>
+          <span>TENUE</span>
+        </div>
+        <div class="outfit-note"><span class="flask">🧪</span>Fait partie de l'ensemble Baddies in STEM.</div>
       </div>
     </div>
 
-    <div class="hud-bottom">
-      <button id="btn-pret" class="btn-pret">
-        <span class="btn-pret-inner">PRÊT</span>
-      </button>
+  </main>
 
-      <div class="fake-actions">
-        <button class="fake-btn">DISCUSSION</button>
-        <button class="fake-btn">ÉMOTE</button>
-        <button class="fake-btn">RETOUR</button>
-      </div>
-
-      <div class="mode-strip">
-        <div class="mode-card m1"><span>OG</span></div>
-        <div class="mode-card m2"><span>BOÎTE DE COMBAT</span></div>
-        <div class="mode-card m3"><span>ZONE WARS</span></div>
-        <div class="mode-card m4"><span>1V1</span></div>
-        <div class="mode-card m5"><span>TERRAIN DE JEU</span></div>
-      </div>
+  <!-- barre du bas -->
+  <footer class="bottombar">
+    <div class="party-msg"><span class="spk">🔊</span>Ariane et Tchoupie ont rejoint le groupe.</div>
+    <div class="hints">
+      <span class="hint"><i>R2</i>Émote</span>
+      <span class="hint"><i>R</i>Formation d'escouade</span>
+      <span class="hint"><i>□</i>Actualités</span>
     </div>
+  </footer>
+</div>
 
-  </div>
-</section>
-
-<!-- ============ ÉCRAN 2 : LARGAGE ============ -->
-<section id="screen-drop" class="screen">
-
+<!-- ======================= LARGAGE (optionnel) ======================= -->
+<div id="drop-screen">
   <div class="drop-phase phase-match">
-    <div class="scene-bg dim" aria-hidden="true"><img src="assets/lobby-bg.jpg" alt=""></div>
     <div class="match-spinner"></div>
     <h2>RECHERCHE DE PARTIE…</h2>
     <p class="match-count"><b id="player-count">1</b> / 100 joueurs</p>
   </div>
-
   <div class="drop-phase phase-bus">
     <div class="bus-sky"></div>
-    <div class="cloud c1"></div>
-    <div class="cloud c2"></div>
-    <div class="cloud c3"></div>
-    <svg class="bus" viewBox="0 0 200 150" aria-hidden="true"><use href="#battle-bus"/></svg>
+    <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+    <svg class="bus" viewBox="0 0 200 150" aria-hidden="true">
+      <ellipse cx="100" cy="143" rx="40" ry="5" fill="#000" opacity=".16"/>
+      <path d="M62 52a38 30 0 0 1 76 0z" fill="#42bdec" stroke="#1b76a6" stroke-width="3"/>
+      <path d="M88 52h24v14H88z" fill="#d6e6ee" stroke="#1b76a6" stroke-width="2"/>
+      <rect x="42" y="66" width="116" height="46" rx="10" fill="#51c6f2" stroke="#1b76a6" stroke-width="3"/>
+      <rect x="50" y="74" width="20" height="16" rx="3" fill="#ccecfb"/>
+      <rect x="76" y="74" width="20" height="16" rx="3" fill="#ccecfb"/>
+      <rect x="102" y="74" width="20" height="16" rx="3" fill="#ccecfb"/>
+      <rect x="128" y="74" width="22" height="16" rx="3" fill="#ccecfb"/>
+      <circle cx="66" cy="114" r="9" fill="#222c34"/><circle cx="134" cy="114" r="9" fill="#222c34"/>
+    </svg>
     <h2 id="bus-text">LARGAGE DANS 3</h2>
   </div>
-
   <div class="drop-phase phase-dive">
     <div class="dive-sky"></div>
     <div class="speed-lines"></div>
     <div class="diver"><img src="assets/ariane-skin.png" alt=""></div>
     <h2>SAUTEZ !</h2>
   </div>
-
   <button id="btn-skip" class="btn-skip">Appuyez pour passer ▸</button>
-</section>
+</div>
 
-<!-- ============ ÉCRAN 3 : VICTOIRE ROYALE ============ -->
-<section id="screen-victory" class="screen">
-  <div class="scene-bg dim" aria-hidden="true">
-    <img src="assets/lobby-bg.jpg" alt="">
+<!-- ======================= VICTOIRE ROYALE ======================= -->
+<div id="victory-screen">
+  <div class="vic-emojis" aria-hidden="true">
+    <span class="em e1">🦘</span><span class="em e2">🍦</span><span class="em e3">🏄‍♀️</span>
+    <span class="em e4">🧪</span><span class="em e5">🍹</span><span class="em e6">📱</span>
+    <span class="em e7">🦥</span><span class="em e8">✈️</span><span class="em e9">🥼</span>
+    <span class="em e10">🍸</span>
   </div>
-  <div class="scene-vignette strong" aria-hidden="true"></div>
   <canvas id="confetti-canvas"></canvas>
 
-  <div class="bg-items" aria-hidden="true">
-    <span class="bg-item i1">🦘</span>
-    <span class="bg-item i2">🍦</span>
-    <span class="bg-item i3">🏄‍♀️</span>
-    <span class="bg-item i4">🧪</span>
-    <span class="bg-item i5">🍹</span>
-    <span class="bg-item i6">📱</span>
-    <span class="bg-item i7">🦥</span>
-    <span class="bg-item i8">✈️</span>
-    <span class="bg-item i9">🥼</span>
-    <span class="bg-item i10">🍸</span>
-  </div>
-
-  <div class="victory-content">
-    <div class="victory-banner">
-      <p class="victory-rank">#1</p>
-      <h1 class="victory-title">VICTOIRE<br><em>ROYALE</em></h1>
-    </div>
-    <p class="victory-sub">JOYEUX ANNIVERSAIRE ARIANE !</p>
-
-    <div class="victory-message" id="victory-message">
+  <div class="vic-inner">
+    <img class="vic-banner" src="assets/victory-banner.png" alt="#1 Victoire Royale">
+    <p class="vic-sub">JOYEUX ANNIVERSAIRE ARIANE !</p>
+    <div class="vic-message" id="victory-message">
       <p>[ Message personnalisé à venir — remplace ce texte ]</p>
       <p>Lorem ipsum, ton petit mot d'anniversaire ira ici. 🎂</p>
     </div>
-
     <button id="btn-rejouer" class="btn-rejouer">REJOUER</button>
   </div>
-</section>
+</div>
+
+<!-- ======================= ROTATION ======================= -->
+<div id="rotate-gate">
+  <div class="rotate-inner">
+    <div class="phone-icon">📱</div>
+    <h2>TOURNE TON TÉLÉPHONE</h2>
+    <p>Ce salon se joue en mode paysage.</p>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
