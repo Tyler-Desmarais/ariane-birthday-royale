@@ -1,10 +1,9 @@
 :root{
-  /* Burbank Big Condensed Black si installée, sinon Anton / Teko */
-  --fn:'Burbank Big Condensed Black','Burbank Big Condensed',Anton,Teko,'Bebas Neue',Impact,sans-serif;
-  --body:'Rajdhani',system-ui,sans-serif;
-
-  --yellow:#ffe32e;
-  --ink:#ffffff;
+  --sage:#8a9a5b;
+  --sage-deep:#6f7d47;
+  --cream:#f6f3e7;
+  --ink:#33381f;
+  --ink-soft:#5d6640;
 }
 
 *{box-sizing:border-box;}
@@ -15,23 +14,15 @@ html,body{
   width:100vw;
   height:100vh;
   overflow:hidden;
-  background:#05070f;
+  background:#20242c;
   color:var(--ink);
-  font-family:var(--body);
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   -webkit-text-size-adjust:100%;
   -webkit-tap-highlight-color:transparent;
 }
 
-/* titres en majuscules, crénage serré */
-.vic-sub,.btn-rejouer,#rotate-gate h2{
-  font-family:var(--fn);
-  text-transform:uppercase;
-  letter-spacing:-0.5px;
-}
-
 /* ======================= SALON ======================= */
-/* l'image du salon est affichée entière (jamais rognée) et centrée ;
-   les barres latérales reprennent la couleur des bords de l'image */
+/* l'image du salon est affichée entière (jamais rognée) et centrée */
 #lobby-ui{
   position:fixed;
   inset:0;
@@ -70,7 +61,6 @@ html,body{
   -webkit-tap-highlight-color:transparent;
   animation:playPulse 2.4s ease-in-out infinite;
 }
-/* halo discret : indique que le bouton est cliquable */
 @keyframes playPulse{
   0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,0);}
   50%{box-shadow:0 0 26px 6px rgba(255,255,255,.45);}
@@ -80,117 +70,146 @@ html,body{
   animation:none;
 }
 
-/* ======================= VICTOIRE ======================= */
+/* ======================= PAGE D'ANNIVERSAIRE ======================= */
 #victory-screen{
   position:fixed;
   inset:0;
   z-index:6;
   display:none;
-  align-items:flex-start;
-  justify-content:center;
+  background:var(--sage);
   overflow-y:auto;
-  overflow-x:hidden;
-  background:#8a9a5b;
 }
-
-#confetti-canvas{position:absolute;inset:0;z-index:2;pointer-events:none;}
-
-.vic-emojis{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;}
-.em{
-  position:absolute;
-  display:inline-block;
-  font-size:clamp(30px,5.5vw,64px);
-  filter:drop-shadow(0 4px 10px rgba(0,0,0,.18));
-}
-.e1{top:4%;left:4%;opacity:.5;transform:rotate(-18deg) scale(1.05);}
-.e2{top:6%;right:5%;opacity:.4;transform:rotate(14deg) scale(.85);}
-.e3{top:40%;left:2%;opacity:.42;transform:rotate(-8deg) scale(.95);}
-.e4{top:16%;left:16%;opacity:.28;transform:rotate(10deg) scale(.7);}
-.e5{bottom:6%;left:6%;opacity:.5;transform:rotate(12deg) scale(1);}
-.e6{bottom:4%;right:6%;opacity:.45;transform:rotate(-14deg) scale(1.1);}
-.e7{top:70%;left:3%;opacity:.35;transform:rotate(6deg) scale(.8);}
-.e8{top:10%;right:20%;opacity:.32;transform:rotate(-10deg) scale(.75);}
-.e9{top:46%;right:3%;opacity:.48;transform:rotate(16deg) scale(1);}
-.e10{top:82%;right:16%;opacity:.36;transform:rotate(-6deg) scale(.9);}
-
 .vic-inner{
-  position:relative;
-  z-index:3;
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  gap:clamp(20px,4vw,52px);
+  padding:clamp(16px,3.5vh,34px) clamp(20px,4vw,48px);
+  max-width:1200px;
+  margin:0 auto;
+}
+
+/* --- colonne de gauche : le mot --- */
+.vic-text{
+  flex:1 1 0;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.vic-banner{
+  width:clamp(150px,20vw,235px);
+  height:auto;
+  margin-bottom:clamp(10px,2vh,18px);
+}
+.vic-text h1{
+  margin:0 0 .5em;
+  font-family:Georgia,'Iowan Old Style','Times New Roman',serif;
+  font-weight:600;
+  font-size:clamp(1.35rem,4.4vh,2.1rem);
+  line-height:1.15;
+  color:var(--cream);
+}
+.vic-message{
+  font-size:clamp(.88rem,2.05vh,1.02rem);
+  line-height:1.65;
+  color:var(--cream);
+}
+.vic-message p{margin:0 0 .75em;}
+.vic-message p:last-child{margin-bottom:0;}
+
+.btn-rejouer{
+  margin-top:clamp(14px,2.6vh,24px);
+  padding:8px 16px;
+  border:1px solid rgba(246,243,231,.45);
+  border-radius:6px;
+  background:transparent;
+  color:var(--cream);
+  font:inherit;
+  font-size:.82rem;
+  cursor:pointer;
+  transition:background .15s ease;
+}
+.btn-rejouer:hover{background:rgba(246,243,231,.14);}
+
+/* --- colonne de droite : les photos --- */
+.vic-photos{
+  flex:0 0 clamp(230px,36%,430px);
   display:flex;
   flex-direction:column;
   align-items:center;
-  text-align:center;
-  gap:clamp(10px,2vh,20px);
-  padding:clamp(16px,4vh,36px) 20px calc(env(safe-area-inset-bottom) + 24px);
+  gap:10px;
+  min-width:0;
+}
+.gallery{
+  position:relative;
   width:100%;
-  max-width:900px;
-  margin:0 auto;
+  /* les photos sont un mélange portrait / paysage : cadre fixe, légèrement
+     plus haut que large (3 photos sur 5 sont en portrait), chaque image
+     affichée en entier dedans */
+  height:clamp(180px,74vh,470px);
 }
-.vic-banner{
-  width:clamp(220px,40vw,480px);
-  height:auto;
-  filter:drop-shadow(0 10px 26px rgba(0,0,0,.28));
-  animation:vicIn .8s cubic-bezier(.2,.9,.3,1.35) both;
-}
-@keyframes vicIn{
-  from{opacity:0;transform:scale(.7);}
-  to{opacity:1;transform:scale(1);}
-}
-.vic-sub{
-  margin:0;
-  font-size:clamp(1.1rem,4vh,2rem);
-  color:#fffef4;
-  text-shadow:0 2px 10px rgba(0,0,0,.25);
-  animation:vicIn .8s cubic-bezier(.2,.9,.3,1.35) .2s both;
-}
-.vic-message{
-  font-family:var(--body);
-  font-size:clamp(.95rem,2.2vh,1.15rem);
-  line-height:1.6;
-  max-width:min(100%,620px);
-  color:#3a3f26;
-  padding:clamp(14px,2.6vh,26px) clamp(18px,3vw,34px);
-  border-radius:16px;
-  background:#fbf9ef;
-  box-shadow:0 14px 30px rgba(0,0,0,.18);
-  animation:vicIn .8s cubic-bezier(.2,.9,.3,1.35) .38s both;
-}
-.vic-message p{margin:0 0 8px;}
-.vic-message p:last-child{margin-bottom:0;}
-
-/* --- galerie photo, défilement tactile --- */
-.photo-gallery{
+.gal-track{
   display:flex;
-  gap:15px;
-  width:100%;
+  height:100%;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
-  padding:4px 20px 10px;
+  scroll-behavior:smooth;
   scrollbar-width:none;
-  animation:vicIn .8s cubic-bezier(.2,.9,.3,1.35) .5s both;
+  border-radius:10px;
+  background:rgba(0,0,0,.14);
 }
-.photo-gallery::-webkit-scrollbar{display:none;}
-.photo-gallery img{
-  flex:0 0 85%;
+.gal-track::-webkit-scrollbar{display:none;}
+.gal-track img{
+  flex:0 0 100%;
+  width:100%;
+  height:100%;
+  /* contain, pas cover : aucune photo n'est rognée */
+  object-fit:contain;
   scroll-snap-align:center;
-  border-radius:12px;
-  object-fit:cover;
-  height:250px;
-  box-shadow:0 10px 24px rgba(0,0,0,.25);
+  user-select:none;
+  -webkit-user-drag:none;
 }
 
-.btn-rejouer{
-  padding:10px 32px;
-  border-radius:9px;
-  border:2px solid #fbf9ef;
-  background:rgba(255,255,255,.15);
-  color:#fffef4;
-  font-size:clamp(1rem,2.6vh,1.4rem);
+.gal-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:2;
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  padding:0 0 3px;
+  border:none;
+  border-radius:50%;
+  background:rgba(28,32,18,.5);
+  color:var(--cream);
+  font-size:1.5rem;
+  line-height:1;
   cursor:pointer;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 6px 18px rgba(0,0,0,.25);
-  animation:vicIn .8s cubic-bezier(.2,.9,.3,1.35) .65s both;
+  transition:background .15s ease, opacity .15s ease;
 }
-.btn-rejouer:active{background:#fbf9ef;color:#4c5a2e;}
+.gal-nav:hover{background:rgba(28,32,18,.72);}
+.gal-nav:disabled{opacity:.25;cursor:default;}
+.gal-nav.prev{left:8px;}
+.gal-nav.next{right:8px;}
+
+.gal-dots{display:flex;gap:7px;}
+.gal-dots button{
+  width:7px;
+  height:7px;
+  padding:0;
+  border:none;
+  border-radius:50%;
+  background:rgba(246,243,231,.4);
+  cursor:pointer;
+  transition:background .15s ease, transform .15s ease;
+}
+.gal-dots button.on{
+  background:var(--cream);
+  transform:scale(1.3);
+}
 
 /* ======================= ROTATION ======================= */
 #rotate-gate{
@@ -202,25 +221,41 @@ html,body{
   justify-content:center;
   text-align:center;
   padding:28px;
-  background:linear-gradient(160deg,#0a1230,#050914);
+  background:var(--sage-deep);
+  color:var(--cream);
 }
 .rotate-inner{max-width:320px;}
 .phone-icon{
-  font-size:58px;
-  animation:tilt 2s ease-in-out infinite;
+  font-size:52px;
   display:inline-block;
+  animation:tilt 2.4s ease-in-out infinite;
 }
 @keyframes tilt{
   0%,100%{transform:rotate(0deg);}
   50%{transform:rotate(-90deg);}
 }
 #rotate-gate h2{
-  margin:18px 0 8px;
-  font-size:1.9rem;
-  color:var(--yellow);
+  margin:16px 0 6px;
+  font-family:Georgia,'Iowan Old Style','Times New Roman',serif;
+  font-weight:600;
+  font-size:1.4rem;
 }
-#rotate-gate p{margin:0;color:#c6d6e6;font-size:1rem;}
+#rotate-gate p{margin:0;opacity:.8;font-size:.95rem;}
 
 @media (orientation:portrait){
   #rotate-gate{display:flex;}
+}
+
+/* écran large : la colonne texte peut respirer */
+@media (min-width:1000px){
+  .vic-text h1{font-size:2.3rem;}
+  .vic-message{font-size:1.08rem;}
+}
+
+/* écran court : on empile moins, on réduit */
+@media (max-height:360px){
+  .vic-banner{width:clamp(120px,16vw,170px);margin-bottom:8px;}
+  .vic-text h1{font-size:1.2rem;}
+  .vic-message{font-size:.82rem;line-height:1.5;}
+  .btn-rejouer{margin-top:10px;padding:6px 12px;font-size:.76rem;}
 }

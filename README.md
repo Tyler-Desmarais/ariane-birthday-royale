@@ -29,17 +29,33 @@ If you swap `lobby.png` for a version where the PLAY button sits elsewhere, re-m
 
 The hotspot has a slow white pulse so it reads as tappable. Delete the `animation:playPulse` line in `style.css` to make it fully invisible.
 
-## Victory screen
+## Birthday page
 
-`assets/victory-banner.png` is the "#1 Victoire Royale" art with its white background flood-filled to transparent from the corners.
+A two-column landscape layout: the note on the left, a photo carousel on the right.
 
-`reference/` holds source art this was built against. Nothing in there is loaded by the page.
+The photos are a **mix of portrait and landscape**, so the carousel uses a fixed
+frame with `object-fit: contain` — every photo shows in full, nothing is cropped.
+(`cover` was cutting the subjects out of the portrait shots entirely.)
 
-`assets/ariane-skin.png` and `assets/lobby-bg.jpg` are left over from the earlier hand-built lobby and are no longer referenced — safe to delete.
+Slide tracking uses `IntersectionObserver`, not the `scroll` event — the track
+fires no scroll events in some browsers, which left the dots stuck on the wrong
+photo. The observer also catches real touch swipes, which button clicks alone
+would miss.
+
+`assets/victory-banner.png` is the "#1 Victoire Royale" art with its white
+background flood-filled to transparent from the corners.
+
+`reference/` holds source art this was built against. Nothing in there is loaded
+by the page.
+
+`assets/ariane-skin.png` and `assets/lobby-bg.jpg` are left over from an earlier
+hand-built lobby and are no longer referenced — safe to delete.
 
 ## Fonts
 
-Only the victory screen uses webfonts now (the lobby's type is part of the image). Headings ask for **Burbank Big Condensed Black** (Fortnite's typeface) and fall back to **Anton** / **Teko** — Burbank is a commercial Adobe font, so it only applies if installed locally. The birthday message stays in Rajdhani, since a condensed display face is hard to read for a paragraph.
+None — the page loads no webfonts. The lobby's type is baked into its image, and
+the birthday page uses the system UI stack with a serif heading. That keeps the
+page fast and stops it looking like a generic template.
 
 ## Editing
 
@@ -51,8 +67,8 @@ Other easy edits:
 
 | What | Where |
 |---|---|
-| Floating emoji on the victory screen | `.vic-emojis` (🦘 🍦 🏄‍♀️ 🧪 🍹 📱 🦥 ✈️ 🥼 🍸) |
-| Photo gallery images | `.photo-gallery` — swap the 5 `assets/Image-Swipe(n).jpg` files or add more `<img>` tags |
+| Heading above the note | `.vic-text h1` |
+| Photos | `.gal-track` — swap the `assets/Image-Swipe(n).jpg` files, or add/remove `<img>` tags (dots follow automatically) |
 
 ## Deploying
 

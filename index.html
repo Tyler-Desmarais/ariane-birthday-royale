@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0b1026">
+<meta name="theme-color" content="#8a9a5b">
 <title>Ariane — Battle Royale</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Teko:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 
@@ -23,33 +20,35 @@
   </div>
 </div>
 
-<!-- ======================= VICTOIRE ROYALE ======================= -->
+<!-- ======================= PAGE D'ANNIVERSAIRE ======================= -->
 <div id="victory-screen">
-  <div class="vic-emojis" aria-hidden="true">
-    <span class="em e1">🦘</span><span class="em e2">🍦</span><span class="em e3">🏄‍♀️</span>
-    <span class="em e4">🧪</span><span class="em e5">🍹</span><span class="em e6">📱</span>
-    <span class="em e7">🦥</span><span class="em e8">✈️</span><span class="em e9">🥼</span>
-    <span class="em e10">🍸</span>
-  </div>
-  <canvas id="confetti-canvas"></canvas>
-
   <div class="vic-inner">
-    <img class="vic-banner" src="assets/victory-banner.png" alt="#1 Victoire Royale">
-    <p class="vic-sub">BONNE FÊTE ARIANE !</p>
-    <div class="vic-message" id="victory-message">
-      <p>Enfin 21 ans! Je suis très chanceuse d’avoir une amie comme toi. J’adore tous les moments qu’on pense ensemble, même quand on fait juste gossip pendant des heures lol.</p>
-      <p>Profite bien de ta journée, avec un shot ou deux baddie 😛 J’espère qu’on va se voir bientôt. Love you&nbsp;!</p>
+
+    <div class="vic-text">
+      <img class="vic-banner" src="assets/victory-banner.png" alt="#1 Victoire Royale">
+      <h1>Bonne fête Ariane&nbsp;!</h1>
+      <div class="vic-message" id="victory-message">
+        <p>Enfin 21 ans&nbsp;! Je suis très chanceuse d’avoir une amie comme toi. J’adore tous les moments qu’on pense ensemble, même quand on fait juste gossip pendant des heures lol.</p>
+        <p>Profite bien de ta journée, avec un shot ou deux baddie 😛 J’espère qu’on va se voir bientôt. Love you&nbsp;!</p>
+      </div>
+      <button id="btn-rejouer" class="btn-rejouer">← Retour au salon</button>
     </div>
 
-    <div class="photo-gallery">
-      <img src="assets/Image-Swipe(1).jpg" alt="Souvenir 1" loading="lazy">
-      <img src="assets/Image-Swipe(2).jpg" alt="Souvenir 2" loading="lazy">
-      <img src="assets/Image-Swipe(3).jpg" alt="Souvenir 3" loading="lazy">
-      <img src="assets/Image-Swipe(4).jpg" alt="Souvenir 4" loading="lazy">
-      <img src="assets/Image-Swipe(5).jpg" alt="Souvenir 5" loading="lazy">
+    <div class="vic-photos">
+      <div class="gallery">
+        <button class="gal-nav prev" id="gal-prev" aria-label="Photo précédente">‹</button>
+        <div class="gal-track" id="gal-track">
+          <img src="assets/Image-Swipe(1).jpg" alt="Souvenir 1">
+          <img src="assets/Image-Swipe(2).jpg" alt="Souvenir 2" loading="lazy">
+          <img src="assets/Image-Swipe(3).jpg" alt="Souvenir 3" loading="lazy">
+          <img src="assets/Image-Swipe(4).jpg" alt="Souvenir 4" loading="lazy">
+          <img src="assets/Image-Swipe(5).jpg" alt="Souvenir 5" loading="lazy">
+        </div>
+        <button class="gal-nav next" id="gal-next" aria-label="Photo suivante">›</button>
+      </div>
+      <div class="gal-dots" id="gal-dots"></div>
     </div>
 
-    <button id="btn-rejouer" class="btn-rejouer">REJOUER</button>
   </div>
 </div>
 
@@ -57,11 +56,11 @@
 <div id="rotate-gate">
   <div class="rotate-inner">
     <div class="phone-icon">📱</div>
-    <h2>TOURNE TON TÉLÉPHONE</h2>
-    <p>Ce salon se joue en mode paysage.</p>
+    <h2>Tourne ton téléphone</h2>
+    <p>Cette page se regarde en mode paysage.</p>
   </div>
 </div>
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 </body>
 </html>
