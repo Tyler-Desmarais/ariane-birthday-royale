@@ -14,7 +14,10 @@ html,body{
   margin:0;
   padding:0;
   width:100vw;
+  /* dvh, pas vh : sur iOS Safari, 100vh ignore la barre d'adresse et pousse
+     le contenu sous les barres du navigateur */
   height:100vh;
+  height:100dvh;
   overflow:hidden;
   background:#20242c;
   color:var(--ink);
@@ -42,6 +45,7 @@ html,body{
   display:block;
   max-width:100vw;
   max-height:100vh;
+  max-height:100dvh;
   width:auto;
   height:auto;
   user-select:none;
@@ -150,6 +154,7 @@ html,body{
      plus haut que large (3 photos sur 5 sont en portrait), chaque image
      affichée en entier dedans */
   height:clamp(180px,74vh,470px);
+  height:clamp(180px,74dvh,470px);
 }
 .gal-track{
   display:flex;
@@ -244,8 +249,28 @@ html,body{
 }
 #rotate-gate p{margin:0;opacity:.8;font-size:.95rem;}
 
-@media (orientation:portrait){
+/* On ne demande de tourner l'appareil que sur un téléphone en portrait :
+   là, le bouton PLAY tomberait à 76x19 px. Sur une tablette en portrait il
+   fait encore 160x41 px, donc on laisse passer et on empile la mise en page. */
+@media (orientation:portrait) and (max-width:700px){
   #rotate-gate{display:flex;}
+}
+
+/* portrait large (tablette) : une seule colonne */
+@media (orientation:portrait){
+  .vic-inner{
+    flex-direction:column;
+    justify-content:center;
+    gap:clamp(16px,3vh,30px);
+  }
+  /* en colonne, flex:1 1 0 ferait grandir le bloc de texte en hauteur et
+     creuserait un grand vide avant les photos */
+  .vic-text{flex:0 0 auto;align-items:center;text-align:center;}
+  .vic-photos{flex:0 0 auto;width:min(100%,560px);}
+  .gallery{
+    height:min(48vh,470px);
+    height:min(48dvh,470px);
+  }
 }
 
 /* écran large : la colonne texte peut respirer */

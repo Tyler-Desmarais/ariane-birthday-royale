@@ -4,7 +4,9 @@ A fake Fortnite lobby built as a birthday surprise for Ariane.
 
 **Flow:** the lobby screen → tap **PLAY** → the **VICTOIRE ROYALE** birthday screen (banner, message, and a swipeable photo gallery).
 
-**Landscape only.** Opening it on a phone held upright shows a "tourne ton téléphone" gate until it's rotated (`@media (orientation:portrait)` in `style.css`).
+**Orientation:** a phone held upright gets a "tourne ton téléphone" gate — at that size the PLAY button would render 76x19 px. A tablet in portrait is left alone (the button is still 160x41 px there) and the birthday page stacks into one column instead. The gate is `@media (orientation:portrait) and (max-width:700px)`.
+
+Heights use `dvh`, not `vh`. On iOS Safari `100vh` is the screen height *ignoring* the address and tab bars, so a `100vh` element is taller than the visible area and its top slides underneath the browser chrome. `vh` is kept as a fallback for older browsers.
 
 ## Run it locally
 
