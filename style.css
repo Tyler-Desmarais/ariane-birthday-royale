@@ -147,6 +147,7 @@ html,body{
   font-family:var(--body);
   font-size:clamp(.95rem,2.2vh,1.15rem);
   line-height:1.6;
+  max-width:min(100%,620px);
   color:#3a3f26;
   padding:clamp(14px,2.6vh,26px) clamp(18px,3vw,34px);
   border-radius:16px;

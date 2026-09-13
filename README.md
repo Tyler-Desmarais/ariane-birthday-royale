@@ -41,9 +41,11 @@ The hotspot has a slow white pulse so it reads as tappable. Delete the `animatio
 
 Only the victory screen uses webfonts now (the lobby's type is part of the image). Headings ask for **Burbank Big Condensed Black** (Fortnite's typeface) and fall back to **Anton** / **Teko** — Burbank is a commercial Adobe font, so it only applies if installed locally. The birthday message stays in Rajdhani, since a condensed display face is hard to read for a paragraph.
 
-## ✏️ TODO — the birthday message
+## Editing
 
-The placeholder text lives in `index.html`, in `<div class="vic-message">`. Replace the two `<p>` lines with the real message.
+The birthday message lives in `index.html`, in `<div class="vic-message">`.
+
+If you change `style.css` or `script.js`, bump the `?v=` number on their `<link>`/`<script>` tags in `index.html` — otherwise browsers keep serving the cached copy and the deploy looks like it silently failed.
 
 Other easy edits:
 
