@@ -1,52 +1,54 @@
 # Ariane's Birthday Royale 🎂🎮
 
-A fake Fortnite lobby (in French) built as a birthday surprise for Ariane.
+A fake Fortnite lobby built as a birthday surprise for Ariane.
 
-**Flow:** Fortnite lobby with Ariane's character + Tchoupie the sidekick → tap **JOUER** → straight to the **VICTOIRE ROYALE** birthday screen (banner, message, and a swipeable photo gallery). No matchmaking/battle-bus/skydive sequence — that was cut; `play-btn`'s click handler just swaps `display` on the two screens, no delay.
+**Flow:** the lobby screen → tap **PLAY** → the **VICTOIRE ROYALE** birthday screen (banner, message, and a swipeable photo gallery).
 
-**Landscape only**, matching the real Fortnite mobile client. Opening it on a phone held upright shows a "tourne ton téléphone" gate until it's rotated (`@media (orientation:portrait)` in `style.css`).
+**Landscape only.** Opening it on a phone held upright shows a "tourne ton téléphone" gate until it's rotated (`@media (orientation:portrait)` in `style.css`).
 
 ## Run it locally
 
 Open `index.html` in a browser, or serve the folder with any static server.
 
-## Character art
+## The lobby screen
 
-`assets/ariane-skin.png` is the "The Chemist" outfit render (Ariane + Tchoupie), background-removed and cropped tight. Ariane and the dog are a single image because they overlap in the source art and can't be split cleanly — so the two name tags are positioned as percentages over that image in `style.css`:
+The lobby is **one image, shown exactly as-is** — `assets/lobby.png`, the pre-rendered mockup with Ariane, Tchoupie and the whole Fortnite UI already baked in. Nothing about it is rebuilt in HTML, so it can't drift from the picture.
 
-- `.tag-ariane` — `left: 58%` (over her head)
-- `.tag-pet` — `left: 24%` (under the dog)
+It is displayed whole, never cropped (`max-width:100vw; max-height:100vh`), and centred, with letterbox bars in `#lobby-ui`'s background colour on whichever axis doesn't fill.
 
-If you ever swap the PNG for a differently-composed one, those two percentages are what you'd re-tune.
+The only interactive part is `.play-hotspot` — a transparent `<button>` positioned in **percentages of the image box**, so it tracks the PLAY button at any screen size:
 
-## Background
+| | value | why |
+|---|---|---|
+| `left` | `3.77%` | measured from the image: yellow pixels span x 63–391 of 1671 |
+| `top` | `75.88%` | …and y 714–799 of 941 |
+| `width` | `19.63%` | |
+| `height` | `9.03%` | |
 
-`assets/lobby-bg.jpg` is rendered crisp — no blur — so it had to be built from real, unedited pixels rather than papered over with a filter. The source screenshot had a character, a dog and UI panels baked in, none of which are usable, so the image is two genuinely clean crops from elsewhere in that same screenshot (a warehouse strip and a trees/meteor strip, both from areas the character never touched) placed side by side with a feathered seam, then padded on both outer edges with a heavily-blurred stretch of their own edge pixels (reads as atmospheric haze, not a stretched photo). `#app-bg` just draws it with `background-size: cover`; `#app-vignette` adds a light top/bottom gradient for text legibility, nothing heavier.
+If you swap `lobby.png` for a version where the PLAY button sits elsewhere, re-measure and update those four numbers.
 
-The uncropped original is kept outside the repo at `../lobby-bg-original-screenshot.png`.
+The hotspot has a slow white pulse so it reads as tappable. Delete the `animation:playPulse` line in `style.css` to make it fully invisible.
+
+## Victory screen
 
 `assets/victory-banner.png` is the "#1 Victoire Royale" art with its white background flood-filled to transparent from the corners.
 
-`reference/` holds the source art this was built against — the `Lobby with skin.png` mockup that defines the target layout, and the original victory banner. Nothing in there is loaded by the page.
+`reference/` holds source art this was built against. Nothing in there is loaded by the page.
+
+`assets/ariane-skin.png` and `assets/lobby-bg.jpg` are left over from the earlier hand-built lobby and are no longer referenced — safe to delete.
 
 ## Fonts
 
-The UI asks for **Burbank Big Condensed Black** (Fortnite's actual typeface) first and falls back to **Anton** / **Teko** from Google Fonts — Burbank is a commercial Adobe font, so it only kicks in if it's installed locally. The two stacks are `--fn` (big text) and `--fn-ui` (small chrome) in `style.css`. The birthday message deliberately stays in Rajdhani, since a condensed display face is hard to read for a paragraph.
+Only the victory screen uses webfonts now (the lobby's type is part of the image). Headings ask for **Burbank Big Condensed Black** (Fortnite's typeface) and fall back to **Anton** / **Teko** — Burbank is a commercial Adobe font, so it only applies if installed locally. The birthday message stays in Rajdhani, since a condensed display face is hard to read for a paragraph.
 
 ## ✏️ TODO — the birthday message
 
 The placeholder text lives in `index.html`, in `<div class="vic-message">`. Replace the two `<p>` lines with the real message.
 
-Other easy edits in `index.html`:
+Other easy edits:
 
 | What | Where |
 |---|---|
-| Level (`Niv. 128`) and the "Prêt" status | `.nametag` |
-| V-Bucks count | `.vbucks` |
-| Nav tabs | `.nav-tabs` |
-| Event card text | `.event-card` |
-| Outfit card | `.outfit-card` |
-| Party message at the bottom | `.party-msg` |
 | Floating emoji on the victory screen | `.vic-emojis` (🦘 🍦 🏄‍♀️ 🧪 🍹 📱 🦥 ✈️ 🥼 🍸) |
 | Photo gallery images | `.photo-gallery` — swap the 5 `assets/Image-Swipe(n).jpg` files or add more `<img>` tags |
 
@@ -54,5 +56,5 @@ Other easy edits in `index.html`:
 
 GitHub Pages:
 1. Push to GitHub.
-2. Settings → Pages → Source: `main` branch, `/ (root)`.
+2. Settings → Pages → Source: the branch you want, `/ (root)`.
 3. Share the `https://<username>.github.io/<repo>/` link.

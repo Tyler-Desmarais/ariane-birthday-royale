@@ -13,105 +13,14 @@
 </head>
 <body>
 
-<!-- ======================= FOND 3D ======================= -->
-<div id="app-bg" aria-hidden="true"></div>
-<div id="app-vignette" aria-hidden="true"></div>
-
 <!-- ======================= SALON ======================= -->
+<!-- l'image du salon est affichée telle quelle ; seul le bouton PLAY est
+     interactif, positionné en pourcentage par-dessus l'image -->
 <div id="lobby-ui">
-
-  <!-- barre de navigation -->
-  <header class="navbar">
-    <div class="brand">FORTNITE</div>
-    <nav class="nav-tabs">
-      <button class="nav-tab active">JOUER</button>
-      <button class="nav-tab">CASIER<i class="badge">!</i></button>
-      <button class="nav-tab">BOUTIQUE</button>
-      <button class="nav-tab">PASSE DE COMBAT</button>
-      <button class="nav-tab">QUÊTES<i class="badge">!</i></button>
-      <button class="nav-tab">COMPÉTITION</button>
-      <button class="nav-tab">CARRIÈRE</button>
-    </nav>
-    <div class="nav-right">
-      <div class="vbucks"><span class="v">V</span>1&nbsp;850</div>
-      <div class="avatar"><span>A</span><i class="online"></i></div>
-      <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  </header>
-
-  <!-- corps : 3 colonnes -->
-  <main class="lobby-body">
-
-    <!-- colonne gauche -->
-    <div class="col col-left">
-      <div class="event-card">
-        <span class="chip">L2</span>
-        <div class="event-art"></div>
-        <div class="event-text">
-          <strong>LE BIG BANG</strong>
-          <span>ÉVÉNEMENT EN DIRECT</span>
-        </div>
-        <div class="event-dots"><i class="on"></i><i></i><i></i><i></i></div>
-      </div>
-
-      <div class="play-panel">
-        <h2 class="mode-title">BATTLE ROYALE</h2>
-        <div class="mode-select">
-          <svg viewBox="0 0 24 24" class="pad"><rect x="2.5" y="7.5" width="19" height="9.5" rx="4.5"/><circle cx="8" cy="12.2" r="1.1"/><circle cx="16" cy="12.2" r="1.1"/></svg>
-          <span>CLASSÉ : OFF<br>SOLO</span>
-        </div>
-        <button id="play-btn" class="play-btn">
-          <span class="play-glyph">▲</span>
-          <span class="play-label">JOUER</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- colonne centrale : personnages -->
-    <div class="col col-center">
-      <div class="nametag">
-        <div class="nametag-icon">🧪</div>
-        <div class="nametag-text">
-          <span class="nt-name">Ariane</span>
-          <span class="nt-ready">Prêt</span>
-        </div>
-        <span class="nt-level">Niv. 128</span>
-      </div>
-
-      <div class="squad">
-        <img id="skin-img" src="assets/ariane-skin.png" alt="Ariane, la chimiste, et Tchoupie">
-      </div>
-
-      <!-- socles lumineux -->
-      <div class="pad-wrap pad-main"><div class="pad-disc"></div><div class="pad-ring"></div></div>
-      <div class="pad-wrap pad-empty pe1"><div class="pad-disc"></div><span class="pad-plus">+</span></div>
-      <div class="pad-wrap pad-empty pe2"><div class="pad-disc"></div><span class="pad-plus">+</span></div>
-      <div class="pad-wrap pad-empty pe3"><div class="pad-disc"></div></div>
-    </div>
-
-    <!-- colonne droite -->
-    <div class="col col-right">
-      <div class="outfit-card">
-        <div class="outfit-thumb"><img src="assets/ariane-skin.png" alt=""></div>
-        <div class="outfit-meta">
-          <strong>THE CHEMIST</strong>
-          <span>TENUE</span>
-        </div>
-        <div class="outfit-note"><span class="flask">🧪</span>Fait partie de l'ensemble Baddies in STEM.</div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- barre du bas -->
-  <footer class="bottombar">
-    <div class="party-msg"><span class="spk">🔊</span>Ariane et Tchoupie ont rejoint le groupe.</div>
-    <div class="hints">
-      <span class="hint"><i>R2</i>Émote</span>
-      <span class="hint"><i>R</i>Formation d'escouade</span>
-      <span class="hint"><i>□</i>Actualités</span>
-    </div>
-  </footer>
+  <div class="lobby-frame">
+    <img src="assets/lobby.png" alt="Salon Fortnite — Ariane et Tchoupie" draggable="false">
+    <button id="play-btn" class="play-hotspot" aria-label="PLAY"></button>
+  </div>
 </div>
 
 <!-- ======================= VICTOIRE ROYALE ======================= -->
