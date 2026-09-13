@@ -2,11 +2,9 @@
 
 A fake Fortnite lobby (in French) built as a birthday surprise for Ariane.
 
-**Flow:** Fortnite lobby with Ariane's character + Tchoupie the sidekick → tap **JOUER** → the lobby fades out → **VICTOIRE ROYALE** birthday screen.
+**Flow:** Fortnite lobby with Ariane's character + Tchoupie the sidekick → tap **JOUER** → straight to the **VICTOIRE ROYALE** birthday screen (banner, message, and a swipeable photo gallery). No matchmaking/battle-bus/skydive sequence — that was cut; `play-btn`'s click handler just swaps `display` on the two screens, no delay.
 
 **Landscape only**, matching the real Fortnite mobile client. Opening it on a phone held upright shows a "tourne ton téléphone" gate until it's rotated (`@media (orientation:portrait)` in `style.css`).
-
-The matchmaking → battle bus → skydive sequence is still in the code but skipped by default. Flip `SHOW_DROP_SEQUENCE` at the top of `script.js` to `true` to put it back between the lobby and the victory screen.
 
 ## Run it locally
 
@@ -23,7 +21,7 @@ If you ever swap the PNG for a differently-composed one, those two percentages a
 
 ## Background
 
-`assets/lobby-bg.jpg` is built from a real Fortnite lobby screenshot. That screenshot had a character, a dog and UI panels in it, so the plate is cropped below the nav bar and between the side panels, then the character is painted over with mirrored scenery and the sky repatched (otherwise the mirror duplicates the meteor). It's drawn by `#app-bg` with `background-size: cover` + `filter: blur(8px)`, with `#app-vignette` over it — that blur is what gives the page its depth-of-field look.
+`assets/lobby-bg.jpg` is rendered crisp — no blur — so it had to be built from real, unedited pixels rather than papered over with a filter. The source screenshot had a character, a dog and UI panels baked in, none of which are usable, so the image is two genuinely clean crops from elsewhere in that same screenshot (a warehouse strip and a trees/meteor strip, both from areas the character never touched) placed side by side with a feathered seam, then padded on both outer edges with a heavily-blurred stretch of their own edge pixels (reads as atmospheric haze, not a stretched photo). `#app-bg` just draws it with `background-size: cover`; `#app-vignette` adds a light top/bottom gradient for text legibility, nothing heavier.
 
 The uncropped original is kept outside the repo at `../lobby-bg-original-screenshot.png`.
 
@@ -50,8 +48,7 @@ Other easy edits in `index.html`:
 | Outfit card | `.outfit-card` |
 | Party message at the bottom | `.party-msg` |
 | Floating emoji on the victory screen | `.vic-emojis` (🦘 🍦 🏄‍♀️ 🧪 🍹 📱 🦥 ✈️ 🥼 🍸) |
-
-Timings for the optional drop sequence are at the top of `startDrop()` in `script.js`.
+| Photo gallery images | `.photo-gallery` — swap the 5 `assets/Image-Swipe(n).jpg` files or add more `<img>` tags |
 
 ## Deploying
 
