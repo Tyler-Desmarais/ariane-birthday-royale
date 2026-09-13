@@ -1,9 +1,11 @@
 :root{
-  --sage:#8a9a5b;
-  --sage-deep:#6f7d47;
+  /* « Heritage » */
+  --sage:#9fad9f;
+  --sage-deep:#5f6b5f;
   --cream:#f6f3e7;
-  --ink:#33381f;
-  --ink-soft:#5d6640;
+  /* texte foncé sur le sage : 5.6:1, alors que la crème ne donnait que 2.1:1 */
+  --ink:#2b3329;
+  --ink-soft:#4a544a;
 }
 
 *{box-sizing:border-box;}
@@ -108,12 +110,12 @@ html,body{
   font-weight:600;
   font-size:clamp(1.35rem,4.4vh,2.1rem);
   line-height:1.15;
-  color:var(--cream);
+  color:var(--ink);
 }
 .vic-message{
   font-size:clamp(.88rem,2.05vh,1.02rem);
   line-height:1.65;
-  color:var(--cream);
+  color:var(--ink);
 }
 .vic-message p{margin:0 0 .75em;}
 .vic-message p:last-child{margin-bottom:0;}
@@ -121,16 +123,16 @@ html,body{
 .btn-rejouer{
   margin-top:clamp(14px,2.6vh,24px);
   padding:8px 16px;
-  border:1px solid rgba(246,243,231,.45);
+  border:1px solid rgba(43,51,41,.4);
   border-radius:6px;
   background:transparent;
-  color:var(--cream);
+  color:var(--ink);
   font:inherit;
   font-size:.82rem;
   cursor:pointer;
   transition:background .15s ease;
 }
-.btn-rejouer:hover{background:rgba(246,243,231,.14);}
+.btn-rejouer:hover{background:rgba(43,51,41,.1);}
 
 /* --- colonne de droite : les photos --- */
 .vic-photos{
@@ -202,12 +204,12 @@ html,body{
   padding:0;
   border:none;
   border-radius:50%;
-  background:rgba(246,243,231,.4);
+  background:rgba(43,51,41,.32);
   cursor:pointer;
   transition:background .15s ease, transform .15s ease;
 }
 .gal-dots button.on{
-  background:var(--cream);
+  background:var(--ink);
   transform:scale(1.3);
 }
 
