@@ -19,6 +19,16 @@ Open `index.html` in a browser, or serve the folder with any static server.
 
 If you ever swap the PNG for a differently-composed one, those two percentages are what you'd re-tune.
 
+## Background
+
+`assets/lobby-bg.jpg` is a crop of a real Fortnite lobby screenshot, taken from a region with no characters or UI in it (trees, hills, meteor, floor) so it works purely as a backdrop. It's rendered through `.scene-bg` with `object-fit: cover` + `filter: blur(8px)` and a radial vignette on top, which is what gives the page its depth-of-field look. The victory screen reuses the same image via `.scene-bg.dim`.
+
+The uncropped original screenshot is kept outside the repo at `../lobby-bg-original-screenshot.png`.
+
+## Fonts
+
+The UI asks for **Burbank Big Condensed Black** (Fortnite's actual typeface) first and falls back to **Anton** / **Teko** from Google Fonts — Burbank is a commercial Adobe font, so it only kicks in if it's installed locally. The two stacks are `--fn-display` (big text) and `--fn-ui` (small chrome) in `style.css`. The birthday message deliberately stays in Rajdhani, since a condensed display face is hard to read for a paragraph.
+
 ## ✏️ TODO — the birthday message
 
 The placeholder text lives in `index.html`, in `<div class="victory-message">`. Replace the two `<p>` lines with the real message.

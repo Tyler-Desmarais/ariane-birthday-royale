@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Teko:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -46,49 +46,10 @@
 <!-- ============ ÉCRAN 1 : SALON ============ -->
 <section id="screen-lobby" class="screen active">
 
-  <div class="sky"></div>
-
-  <svg class="landscape" viewBox="0 0 400 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-    <!-- montagnes lointaines -->
-    <path d="M0 132 L54 78 L96 124 L142 86 L196 140 L248 96 L300 138 L352 104 L400 132 L400 260 L0 260Z" fill="#4b3d78" opacity=".55"/>
-    <path d="M0 150 L46 112 L88 148 L140 116 L186 152 L240 120 L292 154 L344 124 L400 152 L400 260 L0 260Z" fill="#3a3167" opacity=".7"/>
-    <!-- brume -->
-    <path d="M0 158 Q200 146 400 158 L400 190 L0 190Z" fill="#f0a06e" opacity=".18"/>
-    <!-- colline arrière -->
-    <path d="M0 176 Q78 152 154 176 T292 172 T400 182 L400 260 L0 260Z" fill="#27406a"/>
-    <!-- arbres arrière -->
-    <g fill="#1b3054">
-      <path d="M28 176c0-8 6-15 12-15s12 7 12 15z"/><rect x="38" y="172" width="4" height="9"/>
-      <path d="M62 179c0-7 5-13 10-13s10 6 10 13z"/><rect x="70" y="175" width="4" height="8"/>
-      <path d="M318 174c0-8 6-15 12-15s12 7 12 15z"/><rect x="328" y="170" width="4" height="9"/>
-      <path d="M352 179c0-7 5-13 10-13s10 6 10 13z"/><rect x="360" y="175" width="4" height="8"/>
-    </g>
-    <!-- village -->
-    <g>
-      <path d="M96 186v-19l21-11 21 11v19z" fill="#1d3459"/>
-      <path d="M92 167l25-13 25 13z" fill="#8c4a55"/>
-      <rect x="106" y="172" width="8" height="14" fill="#0f2039"/>
-      <rect x="120" y="172" width="8" height="8" fill="#f2c078" opacity=".8"/>
-      <path d="M150 186v-14l16-9 16 9v14z" fill="#1d3459"/>
-      <path d="M147 172l19-10 19 10z" fill="#7c4a68"/>
-      <rect x="159" y="176" width="7" height="10" fill="#f2c078" opacity=".75"/>
-      <path d="M238 186v-16l18-10 18 10v16z" fill="#1d3459"/>
-      <path d="M234 170l22-12 22 12z" fill="#a4505a"/>
-      <rect x="248" y="175" width="7" height="11" fill="#f2c078" opacity=".7"/>
-    </g>
-    <!-- colline médiane -->
-    <path d="M0 202 Q100 180 206 200 T400 198 L400 260 L0 260Z" fill="#1a2f52"/>
-    <g fill="#132441">
-      <path d="M188 200c0-9 7-17 14-17s14 8 14 17z"/><rect x="200" y="196" width="4" height="10"/>
-      <path d="M356 202c0-9 7-16 14-16s14 7 14 16z"/><rect x="368" y="198" width="4" height="10"/>
-      <path d="M14 203c0-9 7-16 14-16s14 7 14 16z"/><rect x="26" y="199" width="4" height="10"/>
-    </g>
-    <!-- colline avant -->
-    <path d="M0 226 Q110 206 218 224 T400 220 L400 260 L0 260Z" fill="#101f3a"/>
-  </svg>
-
-  <div class="meteor" aria-hidden="true"></div>
-  <div class="lobby-vignette" aria-hidden="true"></div>
+  <div class="scene-bg" aria-hidden="true">
+    <img src="assets/lobby-bg.jpg" alt="">
+  </div>
+  <div class="scene-vignette" aria-hidden="true"></div>
 
   <div class="lobby-layout">
 
@@ -111,16 +72,22 @@
     <div class="stage">
       <div class="level-badge"><span>NIV.</span><b>1</b></div>
 
+      <!-- socle lumineux 3D -->
+      <div class="pedestal-wrap">
+        <div class="pedestal"></div>
+        <div class="pedestal-core"></div>
+      </div>
+
+      <!-- emplacements d'équipe vides -->
+      <div class="slot s1"><div class="slot-disc"></div><span>+</span></div>
+      <div class="slot s2"><div class="slot-disc"></div><span>+</span></div>
+      <div class="slot s3"><div class="slot-disc"></div><span>+</span></div>
+
       <div class="squad">
         <img id="skin-img" src="assets/ariane-skin.png" alt="Ariane, la chimiste, et Tchoupie">
         <div class="tag tag-ariane">Ariane</div>
         <div class="tag tag-pet"><svg class="filled paw"><use href="#ic-paw"/></svg>Tchoupie</div>
       </div>
-
-      <div class="platform platform-main"></div>
-      <div class="platform platform-empty p1"><span>+</span></div>
-      <div class="platform platform-empty p2"><span>+</span></div>
-      <div class="platform platform-empty p3"><span>+</span></div>
     </div>
 
     <div class="hud-bottom">
@@ -150,6 +117,7 @@
 <section id="screen-drop" class="screen">
 
   <div class="drop-phase phase-match">
+    <div class="scene-bg dim" aria-hidden="true"><img src="assets/lobby-bg.jpg" alt=""></div>
     <div class="match-spinner"></div>
     <h2>RECHERCHE DE PARTIE…</h2>
     <p class="match-count"><b id="player-count">1</b> / 100 joueurs</p>
@@ -176,6 +144,10 @@
 
 <!-- ============ ÉCRAN 3 : VICTOIRE ROYALE ============ -->
 <section id="screen-victory" class="screen">
+  <div class="scene-bg dim" aria-hidden="true">
+    <img src="assets/lobby-bg.jpg" alt="">
+  </div>
+  <div class="scene-vignette strong" aria-hidden="true"></div>
   <canvas id="confetti-canvas"></canvas>
 
   <div class="bg-items" aria-hidden="true">
